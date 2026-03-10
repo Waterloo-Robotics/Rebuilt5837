@@ -35,6 +35,9 @@ public class SwerveBaseSubsystem {
     public DriveBaseStates current_state;
 
     private CommandXboxController input_controller;
+
+
+    
     private int lock_counter;
     private boolean lock;
 
@@ -46,13 +49,13 @@ public class SwerveBaseSubsystem {
         /* Create the four swerve modules passing in each corner's CAN ID */
         this.modules = new SwerveModule[] {
                 /* Front Left */
-                new SwerveModule(5, 6, 7, false),
+                new SwerveModule(6, 5, 7, false),
                 /* Front Right */
-                new SwerveModule(2, 3, 4, false),
+                new SwerveModule(3, 2, 4, false),
                 /* Rear Left */
-                new SwerveModule(8, 9, 10, false),
+                new SwerveModule(9, 8, 10, false),
                 /* Rear Right */
-                new SwerveModule(11, 12, 13, false)
+                new SwerveModule(12, 11, 13, false)
         };
 
         this.positions = new SwerveModulePosition[4];
