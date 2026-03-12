@@ -1,14 +1,14 @@
 package frc.robot.subsystems;
 
+import com.ctre.phoenix6.configs.MotorOutputConfigs;
+import com.ctre.phoenix6.configs.OpenLoopRampsConfigs;
+import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.hardware.CANcoder;
-import com.revrobotics.RelativeEncoder;
-import com.revrobotics.spark.SparkLowLevel.MotorType;
-import com.revrobotics.spark.config.SparkMaxConfig;
-import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
-import com.revrobotics.spark.SparkMax;
-import com.revrobotics.spark.SparkBase.PersistMode;
-import com.revrobotics.spark.SparkBase.ResetMode;
+import com.ctre.phoenix6.hardware.TalonFX;
+import com.ctre.phoenix6.signals.InvertedValue;
+import com.ctre.phoenix6.signals.NeutralModeValue;
 
+import edu.wpi.first.epilogue.Logged;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
@@ -18,22 +18,26 @@ import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants;
-import edu.wpi.first.epilogue.Logged;
 
 @Logged
 
 public class SwerveModule {
     /* Motors */
-    public SparkMax drive_spark;
-    public SparkMax steer_spark;
+    public TalonFX drive_talon;
+    public TalonFX steer_talon;
 
     /* Motor Configurations */
-    public SparkMaxConfig drive_config;
-    public SparkMaxConfig steer_config;
+    public TalonFXConfiguration drive_config;
+    public TalonFXConfiguration steer_config;
+
+    public MotorOutputConfigs drive_output_config;
+    public MotorOutputConfigs steer_output_config;
+
+    public OpenLoopRampsConfigs drive_open_loop_config;
+    public OpenLoopRampsConfigs steer_open_loop_config;
 
     /* Encoders */
     public CANcoder steer_cancoder;
-    public RelativeEncoder drive_encoder;
 
     /* PID Controllers */
     public SimpleMotorFeedforward drive_feedforward_controller;
@@ -49,32 +53,43 @@ public class SwerveModule {
 
     public SwerveModule(int steer_id, int drive_id, int angle_id, boolean reverse_drive) {
         /* Drive Motor */
-        drive_spark = new SparkMax(drive_id, MotorType.kBrushless);
-        drive_config = new SparkMaxConfig();
+        drive_talon = new TalonFX(drive_id);
+        drive_output_config = new MotorOutputConfigs()
+            .withNeutralMode(NeutralModeValue.Brake);
+        
+        if (reverse_drive) {
+            drive_output_config = drive_output_config.withInverted(InvertedValue.CounterClockwise_Positive);
+        } else {
+            drive_output_config = drive_output_config.withInverted(InvertedValue.Clockwise_Positive);
+        }
 
-        drive_config.idleMode(IdleMode.kBrake);
-        drive_config.inverted(reverse_drive);
         /*
          * By limiting the ramp rate to 0.5 seconds the peak current goes down from 120A
          * to 80A
          */
-        drive_config.openLoopRampRate(0.25);
-
-        /* Drive Encoder */
-        drive_encoder = drive_spark.getEncoder();
+        drive_open_loop_config = new OpenLoopRampsConfigs()
+            .withDutyCycleOpenLoopRampPeriod(0.25)
+        ;
+        
 
         double kWheelCircumference = Units.inchesToMeters(Constants.Drive.kwheelDiameter) * Math.PI;
         kMeterPerMotorRotation = kWheelCircumference / Constants.Drive.kDriveRatio;
 
-        drive_config.encoder.velocityConversionFactor(kMeterPerMotorRotation);
-        drive_config.encoder.positionConversionFactor(kMeterPerMotorRotation);
-        drive_spark.configure(drive_config, ResetMode.kNoResetSafeParameters, PersistMode.kPersistParameters);
+        drive_config = new TalonFXConfiguration()
+            .withMotorOutput(drive_output_config)
+            .withOpenLoopRamps(drive_open_loop_config)
+        ;
+
+        drive_talon.getConfigurator().apply(drive_config, 0.050);
 
         /* Steering Motor */
-        steer_spark = new SparkMax(steer_id, MotorType.kBrushless);
-        steer_config = new SparkMaxConfig();
-        steer_config.inverted(true);
-        steer_spark.configure(steer_config, ResetMode.kNoResetSafeParameters, PersistMode.kPersistParameters);
+        steer_talon = new TalonFX(steer_id);
+        steer_config = new TalonFXConfiguration()
+            .withMotorOutput(
+                new MotorOutputConfigs()
+                    .withInverted(InvertedValue.CounterClockwise_Positive)
+        );
+        steer_talon.getConfigurator().apply(steer_config, 0.050);
 
         /* Steering Encoder */
         steer_cancoder = new CANcoder(angle_id);
@@ -115,7 +130,7 @@ public class SwerveModule {
 
         if (closedLoop) {
             closedLoopVoltage = MathUtil.clamp(
-                    drive_controller.calculate(drive_encoder.getVelocity(), requestedMotorSpeed),
+                    drive_controller.calculate(drive_talon.getVelocity().getValueAsDouble() * kMeterPerMotorRotation, requestedMotorSpeed),
                     -Constants.Drive.kClosedLoopMaxVoltage, Constants.Drive.kClosedLoopMaxVoltage);
         } else {
             closedLoopVoltage = 0;
@@ -126,8 +141,8 @@ public class SwerveModule {
                 -Constants.Drive.kMaxSteerVoltage, Constants.Drive.kMaxSteerVoltage);
 
         /* Set the new powers to the SPARK Max controllers */
-        drive_spark.setVoltage(feedfowardVoltage + closedLoopVoltage);
-        steer_spark.setVoltage(steerVoltage);
+        drive_talon.setVoltage(feedfowardVoltage + closedLoopVoltage);
+        steer_talon.setVoltage(steerVoltage);
 
         /* Update last angle for use next time */
         last_state = state;
@@ -138,7 +153,7 @@ public class SwerveModule {
     }
 
     public SwerveModulePosition get_module_position() {
-        return new SwerveModulePosition(drive_encoder.getPosition(), Rotation2d.fromDegrees(this.get_raw_angle()));
+        return new SwerveModulePosition(drive_talon.getPosition().getValueAsDouble() * kMeterPerMotorRotation, Rotation2d.fromDegrees(this.get_raw_angle()));
     }
 
 }

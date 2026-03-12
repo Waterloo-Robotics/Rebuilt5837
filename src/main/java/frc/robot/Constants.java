@@ -28,7 +28,7 @@ public final class Constants {
     /* kV for in Volts * RPM */
     public static final int kMotorkV = 473;
     public static final double kwheelDiameter = Units.inchesToMeters(4.0);
-    public static final double kDriveRatio = 6.12;
+    public static final double kDriveRatio = 7.03;
     /* Drive PID */
     public static final double kDriveP = 0.0;
     public static final double kDriveI = 0.0;

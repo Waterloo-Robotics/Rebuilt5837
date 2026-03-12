@@ -1,6 +1,7 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.math.MathUtil;
+import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
@@ -9,6 +10,8 @@ import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.units.measure.LinearVelocity;
+import edu.wpi.first.units.measure.Velocity;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -22,6 +25,7 @@ import com.kauailabs.navx.frc.AHRS;
 public class SwerveBaseSubsystem {
     public SwerveModule[] modules;
     public SwerveModulePosition[] positions;
+    public SwerveModuleState[] states;
 
     public static final SwerveDriveKinematics kinematics = new SwerveDriveKinematics(new Translation2d[] {
             new Translation2d(Constants.Drivebase.kWheelOffset_m, Constants.Drivebase.kWheelOffset_m),
@@ -32,11 +36,11 @@ public class SwerveBaseSubsystem {
 
     public SwerveDriveOdometry odometry;
 
-    public DriveBaseStates current_state;
+    public ChassisSpeeds speeds;
+
+    public DriveBaseStates current_state = DriveBaseStates.STOP;
 
     private CommandXboxController input_controller;
-
-
     
     private int lock_counter;
     private boolean lock;
@@ -65,6 +69,9 @@ public class SwerveBaseSubsystem {
         positions[3] = modules[3].get_module_position();
 
         this.gyro = new AHRS(SPI.Port.kMXP);
+
+        odometry = new SwerveDriveOdometry(kinematics, gyro.getRotation2d(), positions);
+        speeds = new ChassisSpeeds();
 
         this.max_drive_speed_m_s = Units.feetToMeters(Constants.Drivebase.kMaxDriveSpeed_m_s);
 
@@ -95,18 +102,18 @@ public class SwerveBaseSubsystem {
         rotation = MathUtil.applyDeadband(rotation, 0.2, 1);
 
         /* If no inputs are present, lock the drivebase */
-        // if (Math.abs(x) + Math.abs(y) + Math.abs(rotation) < 0.15) {
-        //     if (lock) {
-        //         lock();
-        //     } else if (lock_counter > 50) {
-        //         lock = true;
-        //     } else {
-        //         lock_counter++;
-        //     }
-        // } else {
-        //     lock_counter = 0;
-        //     lock = false;
-        // }
+        if (Math.abs(x) + Math.abs(y) + Math.abs(rotation) < 0.15) {
+            if (lock) {
+                lock();
+            } else if (lock_counter > 25) {
+                lock = true;
+            } else {
+                lock_counter++;
+            }
+        } else {
+            lock_counter = 0;
+            lock = false;
+        }
 
         if (!lock) {
             /* Multiply each by max velocity to get desired velocity in each direction */
@@ -137,8 +144,8 @@ public class SwerveBaseSubsystem {
 
     public void stop() {
         for (int i = 0; i < 4; i++) {
-            modules[i].steer_spark.set(0);
-            modules[i].drive_spark.set(0);
+            modules[i].steer_talon.set(0);
+            modules[i].drive_talon.set(0);
         }
     }
 
@@ -180,9 +187,15 @@ public class SwerveBaseSubsystem {
             default:
                 lock();
         }
+        positions[0] = modules[0].get_module_position();
+        positions[1] = modules[1].get_module_position();
+        positions[2] = modules[2].get_module_position();
+        positions[3] = modules[3].get_module_position();
+        odometry.update(gyro.getRotation2d(), positions);
     }
 
     public void setModuleStates(SwerveModuleState[] states) {
+        this.states = states;
         for (int i = 0; i < 4; i++) {
             modules[i].set_module_state(states[i]);
         }
@@ -199,4 +212,23 @@ public class SwerveBaseSubsystem {
         STOP,
         TEST_STEER
     }
+
+    public Pose2d getPose() {
+        return odometry.getPoseMeters();
+    }
+
+    public void resetPose(Pose2d position) {
+        odometry.resetPose(position);
+    }
+
+    public ChassisSpeeds getCurrentSpeeds() {
+        return kinematics.toChassisSpeeds();
+    }
+
+    public void robotDriveRelative(ChassisSpeeds speeds) {
+        SwerveModuleState[] states = kinematics.toSwerveModuleStates(speeds);
+        setModuleStates(states);
+    }
+
+
 }
