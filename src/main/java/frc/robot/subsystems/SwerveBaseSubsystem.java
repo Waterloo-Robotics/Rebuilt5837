@@ -222,7 +222,7 @@ public class SwerveBaseSubsystem {
     }
 
     public ChassisSpeeds getCurrentSpeeds() {
-        return kinematics.toChassisSpeeds();
+        return kinematics.toChassisSpeeds(states);
     }
 
     public void robotDriveRelative(ChassisSpeeds speeds) {

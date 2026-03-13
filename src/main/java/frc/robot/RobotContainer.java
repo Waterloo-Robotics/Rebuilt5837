@@ -7,8 +7,10 @@ package frc.robot;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.subsystems.DrivebaseSubsystem;
 import edu.wpi.first.epilogue.Logged;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import com.pathplanner.lib.commands.PathPlannerAuto;
 import com.pathplanner.lib.auto.NamedCommands;
 
 /**
@@ -29,6 +31,7 @@ public class RobotContainer {
   private final CommandJoystick farmSim1 = new CommandJoystick(2);
   private final CommandJoystick farmSim2 = new CommandJoystick(3);
 
+  
   /* Robot Subsystems */
   public final DrivebaseSubsystem m_drivebaseSubsystem = new DrivebaseSubsystem(m_driverController);
 
@@ -43,4 +46,7 @@ public class RobotContainer {
   private void configureBindings() {
 
   }
+  public Command getAutonomousCommand() {
+    return new PathPlannerAuto("Example Auto");
+}
 }
