@@ -72,7 +72,7 @@ public class SwerveModule {
         ;
         
 
-        double kWheelCircumference = Units.inchesToMeters(Constants.Drive.kwheelDiameter) * Math.PI;
+        double kWheelCircumference = Constants.Drive.kwheelDiameter * Math.PI;
         kMeterPerMotorRotation = kWheelCircumference / Constants.Drive.kDriveRatio;
 
         drive_config = new TalonFXConfiguration()
