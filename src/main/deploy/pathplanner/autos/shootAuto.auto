@@ -1,0 +1,49 @@
+{
+  "version": "2025.0",
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "shootOne"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 5.0
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "shootTwo"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 6.0
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "shootThree"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "lift"
+          }
+        }
+      ]
+    }
+  },
+  "resetOdom": true,
+  "folder": null,
+  "choreoAuto": false
+}
