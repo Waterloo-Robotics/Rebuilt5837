@@ -3,7 +3,14 @@
 // the WPILib BSD license file in the root directory of this project.
 
 package frc.robot.subsystems;
+
+import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.config.RobotConfig;
+import com.pathplanner.lib.controllers.PPHolonomicDriveController;
+import com.pathplanner.lib.config.PIDConstants;
+
 import edu.wpi.first.epilogue.Logged;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -16,6 +23,36 @@ public class DrivebaseSubsystem extends SubsystemBase {
 
     public DrivebaseSubsystem(CommandXboxController driver_controller) {
         swerve_modules = new SwerveBaseSubsystem(driver_controller);
+
+        // Load the RobotConfig from the GUI settings
+        RobotConfig config;
+        try {
+            config = RobotConfig.fromGUISettings();
+        } catch (Exception e) {
+            e.printStackTrace();
+            config = null;
+        }
+
+        // Configure AutoBuilder
+        AutoBuilder.configure(
+            swerve_modules::getPose,
+            swerve_modules::resetPose,
+            swerve_modules::getCurrentSpeeds,
+            (speeds, feedforwards) -> swerve_modules.robotDriveRelative(speeds),
+            new PPHolonomicDriveController(
+                new PIDConstants(5.0, 0.0, 0.0), // Translation PID
+                new PIDConstants(5.0, 0.0, 0.0)  // Rotation PID
+            ),
+            config,
+            () -> {
+                var alliance = DriverStation.getAlliance();
+                if (alliance.isPresent()) {
+                    return alliance.get() == DriverStation.Alliance.Red;
+                }
+                return false;
+            },
+            this
+        );
     }
 
     public Command driverControlledCommand() {
@@ -24,12 +61,9 @@ public class DrivebaseSubsystem extends SubsystemBase {
 
     @Override
     public void periodic() {
-        // This method will be called once per scheduler run
         swerve_modules.update();
     }
 
     @Override
-    public void simulationPeriodic() {
-        // This method will be called once per scheduler run during simulation
-    }
+    public void simulationPeriodic() {}
 }

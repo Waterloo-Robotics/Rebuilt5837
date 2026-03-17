@@ -26,7 +26,7 @@ public final class Constants {
   public static class Drive {
     public static final int kMotorkS = 0;
     /* kV for in Volts * RPM */
-    public static final int kMotorkV = 473;
+    public static final double kMotorkV = 0.002;
     public static final double kwheelDiameter = Units.inchesToMeters(4.0);
     public static final double kDriveRatio = 7.03;
     /* Drive PID */
@@ -45,7 +45,7 @@ public final class Constants {
 
   public static class Drivebase {
     public static final double kWheelOffset_m = Units.inchesToMeters(12);
-    public static final double kMaxDriveSpeed_m_s = Units.feetToMeters(0.5);
-    public static final double kMaxSpinSpeed_rev_s = 0.02; // Rps
+    public static final double kMaxDriveSpeed_m_s = Units.feetToMeters(5);
+    public static final double kMaxSpinSpeed_rev_s = 0.2; // Rps
   }
 }
