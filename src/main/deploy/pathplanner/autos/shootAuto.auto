@@ -7,7 +7,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "shootOne"
+            "pathName": "S1A"
           }
         },
         {
@@ -19,19 +19,13 @@
         {
           "type": "path",
           "data": {
-            "pathName": "shootTwo"
+            "pathName": "S1B"
           }
         },
         {
           "type": "wait",
           "data": {
             "waitTime": 5.0
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "shootThree"
           }
         }
       ]
