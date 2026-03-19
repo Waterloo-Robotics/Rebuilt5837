@@ -1,0 +1,97 @@
+package frc.robot.subsystems;
+
+import edu.wpi.first.math.MathUtil;
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.kinematics.ChassisSpeeds;
+import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
+import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
+import edu.wpi.first.math.kinematics.SwerveModulePosition;
+import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.math.util.Units;
+import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.networktables.StructPublisher;
+import edu.wpi.first.units.measure.LinearVelocity;
+import edu.wpi.first.units.measure.Velocity;
+import edu.wpi.first.wpilibj.SPI;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import frc.robot.Constants;
+import edu.wpi.first.epilogue.Logged;
+
+import com.kauailabs.navx.frc.AHRS;
+
+
+@Logged
+public class IntakeSubsystem {
+    
+    /* Motors */
+    public TalonFX intake_talon;
+    public TalonFX rotate_talon;
+
+    /* Motor Configurations */
+    public TalonFXConfiguration intake_config;
+    public TalonFXConfiguration rotate_config;
+
+    public MotorOutputConfigs intake_output_config;
+    public MotorOutputConfigs rotate_output_config;
+
+    public OpenLoopRampsConfigs intake_open_loop_config;
+    public OpenLoopRampsConfigs rotate_open_loop_config;
+
+    /* PID Controllers */
+    public SimpleMotorFeedforward rotate_feedforward_controller;
+    public PIDController intake_controller;
+    public PIDController rotate_controller;
+    
+    private CommandXboxController input_controller;
+    public int intake_on  = 10;
+    public int intake_off = 0;
+
+    public IntakeSubsystem(int intake_id, int rotate_id, CommandXboxController xbox_controller) {
+        
+        this.intake_talon = new TalonFX(intake_id);
+
+
+        this.rotate_talon = new TalonFX(rotate_id);
+        
+        this.input_controller = xbox_controller;
+    }
+
+    public void intake_on() {
+        
+    }
+
+    public void intake_off() {
+        
+    }
+
+    public double getRotatePosition() {
+        return this.rotate_talon.getPosition().getValueAsDouble() * 360;
+    }
+    
+    public double getIntakeVelocity() {
+        return this.intake_talon.getVelocity().getValueAsDouble() * 60;
+    }
+
+
+    public Command intakeCommand() {
+
+    }
+
+
+    public void update() {
+
+        switch (current_state) {
+            case on:
+                intake_on();
+                break;
+            case off:
+                intake_off();
+                break;
+
+        }
+    }
+
+}
