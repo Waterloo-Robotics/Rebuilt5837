@@ -1,0 +1,99 @@
+package frc.robot.subsystems;
+
+import edu.wpi.first.math.MathUtil;
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.kinematics.ChassisSpeeds;
+import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
+import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
+import edu.wpi.first.math.kinematics.SwerveModulePosition;
+import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.math.util.Units;
+import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.networktables.StructPublisher;
+import edu.wpi.first.units.measure.LinearVelocity;
+import edu.wpi.first.units.measure.Velocity;
+import edu.wpi.first.wpilibj.SPI;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import frc.robot.Constants;
+import edu.wpi.first.epilogue.Logged;
+
+import com.kauailabs.navx.frc.AHRS;
+
+
+@Logged
+public class ClimberSubsystem {
+    
+    public enum ClimberStates {
+        NOTHING,
+        LIFT,
+        RELEASE,
+        
+    }
+
+    /* Motors */
+    public TalonFX Climber_talon;
+
+    /* Motor Configurations */
+    public TalonFXConfiguration Climber_config;
+   
+
+    public MotorOutputConfigs Climber_output_config;
+
+    public OpenLoopRampsConfigs Climber_open_loop_config;
+
+    /* PID Controllers */
+    public SimpleMotorFeedforward Climber_feedforward_controller;
+    public PIDController Climber_controller;
+
+    public ClimberStates current_state = ClimberStates.NOTHING;
+    
+    private CommandXboxController input_controller;
+    public double Climber_speed = 0;
+    public double Climber_postion = 0;
+
+    public HotDogSubsystem(int CLimber_id, CommandXboxController xbox_controller) {
+        
+        this.Climber_talon = new TalonFX(Climber_id);
+        this.Climber_output_config = new MotorOutputConfigs();
+        this.Climber_open_loop_config = new OpenLoopRampsConfigs()
+            .withDutyCycleOpenLoopRampPeriod(0.25)
+        ;
+        this.Climber_config = new TalonFXConfiguration()
+            .withMotorOutput(Climber_output_config)
+            .withOpenLoopRamps(Climber_open_loop_config)
+        ;
+        this.Climber_talon.getConfigurator().apply(Climber_config, 0.020);
+
+    
+    }
+
+    public void ClimberUP() {
+        this.Climber_postion = 50;
+    }
+
+    public void ClimberDOWN() {
+        this.Climber_postion = 0;
+    }
+
+    public double getClimberPosition() {
+        return this.Climber_talon.getPosition().getValueAsDouble() * 360;
+    }
+    
+    public double getClimberVelocity() {
+        return this.Climber_talon.getVelocity().getValueAsDouble() * 60;
+    }
+
+
+    public Command ClimberCommand() {
+
+    }
+
+    @Override
+    public void update() {
+        
+    }
+
+}

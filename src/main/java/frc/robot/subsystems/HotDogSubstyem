@@ -1,0 +1,97 @@
+package frc.robot.subsystems;
+
+import edu.wpi.first.math.MathUtil;
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.kinematics.ChassisSpeeds;
+import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
+import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
+import edu.wpi.first.math.kinematics.SwerveModulePosition;
+import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.math.util.Units;
+import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.networktables.StructPublisher;
+import edu.wpi.first.units.measure.LinearVelocity;
+import edu.wpi.first.units.measure.Velocity;
+import edu.wpi.first.wpilibj.SPI;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import frc.robot.Constants;
+import edu.wpi.first.epilogue.Logged;
+
+import com.kauailabs.navx.frc.AHRS;
+
+
+@Logged
+public class HotDogSubsystem {
+    
+    public enum HotDogStates {
+        STOP,
+        MOVE,
+        REVERSE
+    }
+
+    /* Motors */
+    public TalonFX HotDog_talon;
+
+    /* Motor Configurations */
+    public TalonFXConfiguration hotdog_config;
+   
+
+    public MotorOutputConfigs hotdog_output_config;
+
+    public OpenLoopRampsConfigs hotdog_open_loop_config;
+
+    /* PID Controllers */
+    public PIDController hotdog_controller;
+
+    public HotDogStates current_state = HotDogStates.STOP;
+    
+    private CommandXboxController input_controller;
+    public double hotdog_speed = 0;
+
+    public HotDogSubsystem(int hotdog_id, CommandXboxController xbox_controller) {
+        
+        this.HotDog_talon = new TalonFX(hotdog_id);
+        this.hotdog_output_config = new MotorOutputConfigs();
+        this.hotdog_open_loop_config = new OpenLoopRampsConfigs()
+            .withDutyCycleOpenLoopRampPeriod(0.25)
+        ;
+        this.hotdog_config = new TalonFXConfiguration()
+            .withMotorOutput(hotdog_output_config)
+            .withOpenLoopRamps(hotdog_open_loop_config)
+        ;
+        this.HotDog_talon.getConfigurator().apply(hotdog_config, 0.020);
+
+    
+    }
+
+    public void SpinFoward() {
+        this.hotdog_speed = 500;
+    }
+
+    public void SpinBackward() {
+        this.hotdog_speed = -500;
+    }
+
+    public void StopHotDogs() {
+        this.hotdog_speed = 0;
+    }
+
+    
+    public double gethotdogVelocity() {
+        return this.HotDog_talon.getVelocity().getValueAsDouble() * 60;
+    }
+
+
+    public Command HotDogCommand() {
+
+    }
+
+    @Override
+    public void update() {
+        
+    }
+
+}
