@@ -40,6 +40,11 @@ public class RobotContainer {
     configureBindings();
 
     m_drivebaseSubsystem.setDefaultCommand(m_drivebaseSubsystem.driverControlledCommand());
+    
+    // These are example commands for PathPlanner
+    /* NamedCommands.registerCommand("autoBalance", swerve.autoBalanceCommand());
+    NamedCommands.registerCommand("exampleCommand", exampleSubsystem.exampleCommand());
+    NamedCommands.registerCommand("someOtherCommand", new SomeOtherCommand()); */
   }
 
   /* Configure trigger->command mappings */
