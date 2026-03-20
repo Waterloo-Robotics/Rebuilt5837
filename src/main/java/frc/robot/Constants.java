@@ -50,9 +50,9 @@ public final class Constants {
   }
 
   public static class Intake {
-    public static final double kDriveRatio = 7.03;
+    public static final double kIntakeRatio = 9.0;
     /* Intake PID */
-    public static final double kIntakeP = 0.048;
+    public static final double kIntakeP = 0.005;
     public static final double kIntakeI = 0.0;
     public static final double kIntakeD = 0.0;
     public static final double kIntakeTolerance = 1;

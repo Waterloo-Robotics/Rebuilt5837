@@ -21,6 +21,24 @@ import frc.robot.Constants;
 import edu.wpi.first.epilogue.Logged;
 
 import com.kauailabs.navx.frc.AHRS;
+import com.ctre.phoenix6.configs.MotorOutputConfigs;
+import com.ctre.phoenix6.configs.OpenLoopRampsConfigs;
+import com.ctre.phoenix6.configs.TalonFXConfiguration;
+import com.ctre.phoenix6.hardware.CANcoder;
+import com.ctre.phoenix6.hardware.TalonFX;
+import com.ctre.phoenix6.signals.InvertedValue;
+import com.ctre.phoenix6.signals.NeutralModeValue;
+
+import edu.wpi.first.epilogue.Logged;
+import edu.wpi.first.math.MathUtil;
+import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.controller.SimpleMotorFeedforward;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.kinematics.SwerveModulePosition;
+import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.math.util.Units;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.Constants;
 
 
 @Logged
@@ -82,16 +100,6 @@ public class HotDogSubsystem {
     
     public double gethotdogVelocity() {
         return this.HotDog_talon.getVelocity().getValueAsDouble() * 60;
-    }
-
-
-    public Command HotDogCommand() {
-
-    }
-
-    @Override
-    public void update() {
-        
     }
 
 }

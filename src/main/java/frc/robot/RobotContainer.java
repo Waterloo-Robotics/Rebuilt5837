@@ -5,6 +5,8 @@
 package frc.robot;
 
 import frc.robot.Constants.OperatorConstants;
+import frc.robot.commands.IntakeOnCommand;
+import frc.robot.commands.IntakeOffCommand;
 import frc.robot.subsystems.DrivebaseSubsystem;
 import edu.wpi.first.epilogue.Logged;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -12,6 +14,7 @@ import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import com.pathplanner.lib.commands.PathPlannerAuto;
 import com.pathplanner.lib.auto.NamedCommands;
+import frc.robot.subsystems.IntakeSubsystem;
 
 /**
  * This class is where the bulk of the robot should be declared. Since
@@ -33,17 +36,20 @@ public class RobotContainer {
 
   
   /* Robot Subsystems */
-  public final DrivebaseSubsystem m_drivebaseSubsystem = new DrivebaseSubsystem(m_driverController);
+  // public final DrivebaseSubsystem m_drivebaseSubsystem = new DrivebaseSubsystem(m_driverController);
+  public final IntakeSubsystem m_intakeSubsystem = new IntakeSubsystem(15,16, m_driverController);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     configureBindings();
 
-    m_drivebaseSubsystem.setDefaultCommand(m_drivebaseSubsystem.driverControlledCommand());
+    // m_drivebaseSubsystem.setDefaultCommand(m_drivebaseSubsystem.driverControlledCommand());
   }
 
   /* Configure trigger->command mappings */
   private void configureBindings() {
+    m_driverController.a().onTrue(new IntakeOnCommand(m_intakeSubsystem));
+    m_driverController.b().onTrue(new IntakeOffCommand(m_intakeSubsystem));
 
   }
   public Command getAutonomousCommand() {

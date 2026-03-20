@@ -22,6 +22,25 @@ import edu.wpi.first.epilogue.Logged;
 
 import com.kauailabs.navx.frc.AHRS;
 
+import com.ctre.phoenix6.configs.MotorOutputConfigs;
+import com.ctre.phoenix6.configs.OpenLoopRampsConfigs;
+import com.ctre.phoenix6.configs.TalonFXConfiguration;
+import com.ctre.phoenix6.hardware.CANcoder;
+import com.ctre.phoenix6.hardware.TalonFX;
+import com.ctre.phoenix6.signals.InvertedValue;
+import com.ctre.phoenix6.signals.NeutralModeValue;
+
+import edu.wpi.first.epilogue.Logged;
+import edu.wpi.first.math.MathUtil;
+import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.controller.SimpleMotorFeedforward;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.kinematics.SwerveModulePosition;
+import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.math.util.Units;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.Constants;
+
 
 @Logged
 public class ClimberSubsystem {
@@ -54,7 +73,7 @@ public class ClimberSubsystem {
     public double Climber_speed = 0;
     public double Climber_postion = 0;
 
-    public HotDogSubsystem(int CLimber_id, CommandXboxController xbox_controller) {
+    public ClimberSubsystem(int Climber_id, CommandXboxController xbox_controller) {
         
         this.Climber_talon = new TalonFX(Climber_id);
         this.Climber_output_config = new MotorOutputConfigs();
@@ -84,16 +103,6 @@ public class ClimberSubsystem {
     
     public double getClimberVelocity() {
         return this.Climber_talon.getVelocity().getValueAsDouble() * 60;
-    }
-
-
-    public Command ClimberCommand() {
-
-    }
-
-    @Override
-    public void update() {
-        
     }
 
 }
