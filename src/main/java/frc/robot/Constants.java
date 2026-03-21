@@ -52,15 +52,20 @@ public final class Constants {
   public static class Intake {
     public static final double kIntakeRatio = 9.0;
     /* Intake PID */
+    public static final double kIntakeS = 0.1;
+    public static final double kIntakeV = 0.12;
     public static final double kIntakeP = 0.005;
     public static final double kIntakeI = 0.0;
     public static final double kIntakeD = 0.0;
     public static final double kIntakeTolerance = 1;
     public static final double kMaxIntakeVoltage = 8;
     /* Rotate PID */
-    public static final double kRotateP = 0.0;
-    public static final double kRotateI = 0.0;
-    public static final double kRotateD = 0.0;
+    public static final double kRotateS = 0.001;
+    public static final double kRotateV = 0.0001;
+    public static final double kRotateP = 0.01;
+    public static final double kRotateI = 0.001;
+    public static final double kRotateD = 0.0001;
+    public static final double kRotateRatio = 50.0;
     /* Rotate Feedforward */
     public static final int kMotorkS = 0;
       // kV for in Volts * RPM

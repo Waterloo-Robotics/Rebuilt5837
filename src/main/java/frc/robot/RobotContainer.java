@@ -6,6 +6,10 @@ package frc.robot;
 
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.IntakeOnCommand;
+import frc.robot.commands.RotateDownCommand;
+import frc.robot.commands.RotateHalfwayCommand;
+import frc.robot.commands.RotateHomeCommand;
+import frc.robot.commands.RotateStopCommand;
 import frc.robot.commands.IntakeOffCommand;
 import frc.robot.subsystems.DrivebaseSubsystem;
 import edu.wpi.first.epilogue.Logged;
@@ -37,7 +41,7 @@ public class RobotContainer {
   
   /* Robot Subsystems */
   // public final DrivebaseSubsystem m_drivebaseSubsystem = new DrivebaseSubsystem(m_driverController);
-  public final IntakeSubsystem m_intakeSubsystem = new IntakeSubsystem(15,16, m_driverController);
+  public final IntakeSubsystem m_intakeSubsystem = new IntakeSubsystem(15,16);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -48,8 +52,10 @@ public class RobotContainer {
 
   /* Configure trigger->command mappings */
   private void configureBindings() {
-    m_driverController.a().onTrue(new IntakeOnCommand(m_intakeSubsystem));
-    m_driverController.b().onTrue(new IntakeOffCommand(m_intakeSubsystem));
+    m_driverController.a().onTrue(new RotateStopCommand(m_intakeSubsystem));
+    m_driverController.b().onTrue(new RotateDownCommand(m_intakeSubsystem));
+    m_driverController.x().onTrue(new RotateHalfwayCommand(m_intakeSubsystem));
+    m_driverController.y().onTrue(new RotateHomeCommand(m_intakeSubsystem));
 
   }
   public Command getAutonomousCommand() {
