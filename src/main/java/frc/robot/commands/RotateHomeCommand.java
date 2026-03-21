@@ -31,6 +31,8 @@ public class RotateHomeCommand extends Command {
   @Override
   public void execute() {
     m_subsystem.rotate_home();
+    m_subsystem.intake_off();
+
   }
 
   // Called once the command ends or is interrupted.

@@ -10,7 +10,7 @@ import com.ctre.phoenix6.configs.OpenLoopRampsConfigs;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.InvertedValue;
-
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -18,7 +18,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 
 @Logged
-public class ClimberSubsystem {
+public class ClimberSubsystem extends SubsystemBase{
     
     public enum ClimberStates {
         NOTHING,
@@ -28,56 +28,75 @@ public class ClimberSubsystem {
     }
 
     /* Motors */
-    public TalonFX Climber_talon;
+    public TalonFX climber_talon;
 
     /* Motor Configurations */
-    public TalonFXConfiguration Climber_config;
-   
-
-    public MotorOutputConfigs Climber_output_config;
-
-    public OpenLoopRampsConfigs Climber_open_loop_config;
+    public TalonFXConfiguration climber_config;
+    public MotorOutputConfigs climber_output_config;
+    public OpenLoopRampsConfigs climber_open_loop_config;
 
     /* PID Controllers */
-    public SimpleMotorFeedforward Climber_feedforward_controller;
-    public PIDController Climber_controller;
+    public SimpleMotorFeedforward climber_feedforward_controller;
+    public PIDController climber_controller;
 
     public ClimberStates current_state = ClimberStates.NOTHING;
     
     private CommandXboxController input_controller;
-    public double Climber_speed = 0;
-    public double Climber_postion = 0;
+    public double Climber_Home  = 0;
+    public double Climber_Down = 10;
+    public double Climber_Up = 50;
+    public double target_position;
 
-    public ClimberSubsystem(int Climber_id, CommandXboxController xbox_controller) {
+    public ClimberSubsystem(int climber_id, CommandXboxController xbox_controller) {
         
-        this.Climber_talon = new TalonFX(Climber_id);
-        this.Climber_output_config = new MotorOutputConfigs();
-        this.Climber_open_loop_config = new OpenLoopRampsConfigs()
+        this.climber_talon = new TalonFX(climber_id);
+        this.climber_output_config = new MotorOutputConfigs();
+        this.climber_open_loop_config = new OpenLoopRampsConfigs()
             .withDutyCycleOpenLoopRampPeriod(0.25)
         ;
-        this.Climber_config = new TalonFXConfiguration()
-            .withMotorOutput(Climber_output_config)
-            .withOpenLoopRamps(Climber_open_loop_config)
+        this.climber_config = new TalonFXConfiguration()
+            .withMotorOutput(climber_output_config)
+            .withOpenLoopRamps(climber_open_loop_config)
         ;
-        this.Climber_talon.getConfigurator().apply(Climber_config, 0.020);
+        this.climber_talon.getConfigurator().apply(climber_config, 0.020);
 
     
     }
 
-    public void ClimberUP() {
-        this.Climber_postion = 50;
+    public void Climber_home() {
+        target_position = Climber_Home;
+        rotate_climber();
     }
 
-    public void ClimberDOWN() {
-        this.Climber_postion = 0;
+    public void Climber_down() {
+        target_position = Climber_Down;
+        rotate_climber();
+    }
+    public void Climber_up() {
+        target_position = Climber_Up;
+        rotate_climber();
+    }
+
+    public void rotate_climber() {
+
+        double pid_term = climber_controller.calculate(getClimberPosition(), target_position);
+        double feedforward_term = climber_feedforward_controller.calculate(getClimberVelocity());
+
+        double auto_power = MathUtil.clamp(pid_term + feedforward_term, -8, 8);
+
+        climber_talon.setVoltage(auto_power);
+      
+        SmartDashboard.putNumber("Rotate Commanded", auto_power);
+        SmartDashboard.putNumber("Rotate Actual", getClimberVelocity());
+        SmartDashboard.putNumber("Rotate Pos", getClimberPosition());
     }
 
     public double getClimberPosition() {
-        return this.Climber_talon.getPosition().getValueAsDouble() * 360;
+        return this.climber_talon.getPosition().getValueAsDouble() * 360;
     }
     
     public double getClimberVelocity() {
-        return this.Climber_talon.getVelocity().getValueAsDouble() * 60;
+        return this.climber_talon.getVelocity().getValueAsDouble() * 60;
     }
 
 }

@@ -5,8 +5,6 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Constants;
 import edu.wpi.first.epilogue.Logged;
-
-import com.ctre.phoenix6.StatusSignal;
 import com.ctre.phoenix6.configs.MotorOutputConfigs;
 import com.ctre.phoenix6.configs.OpenLoopRampsConfigs;
 import com.ctre.phoenix6.configs.Slot0Configs;
@@ -14,12 +12,9 @@ import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.controls.VelocityVoltage;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.InvertedValue;
-import com.revrobotics.RelativeEncoder;
-
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
-import edu.wpi.first.units.measure.Angle;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 
@@ -39,9 +34,7 @@ public class IntakeSubsystem extends SubsystemBase {
 
     /* Motor Configurations */
     public TalonFXConfiguration rotate_config;
-
     public MotorOutputConfigs rotate_output_config;
-
     public OpenLoopRampsConfigs rotate_open_loop_config;
     public Slot0Configs intake_config;
     public final VelocityVoltage intake_voltage; 
@@ -64,7 +57,7 @@ public class IntakeSubsystem extends SubsystemBase {
         
         this.intake_talon = new TalonFX(intake_id);
 
-
+        /*intake Things */
         intake_config = new Slot0Configs();
         intake_config.kS = Constants.Intake.kIntakeS;
         intake_config.kV = Constants.Intake.kIntakeV;
@@ -75,7 +68,9 @@ public class IntakeSubsystem extends SubsystemBase {
         intake_talon.getConfigurator().apply(intake_config);
 
         intake_voltage = new VelocityVoltage(0).withSlot(0);
+        intake_controller = new PIDController(Constants.Intake.kIntakeP, Constants.Intake.kIntakeI, Constants.Intake.kIntakeD );
 
+        /*Rotate Things */
         this.rotate_talon = new TalonFX(rotate_id);
         this.rotate_output_config = new MotorOutputConfigs();
         this.rotate_open_loop_config = new OpenLoopRampsConfigs()
@@ -86,7 +81,7 @@ public class IntakeSubsystem extends SubsystemBase {
             .withOpenLoopRamps(rotate_open_loop_config)
         ;
         this.rotate_talon.getConfigurator().apply(rotate_config, 0.020);
-        intake_controller = new PIDController(Constants.Intake.kIntakeP, Constants.Intake.kIntakeI, Constants.Intake.kIntakeD );
+       
 
         rotate_controller = new PIDController(Constants.Intake.kRotateP, Constants.Intake.kRotateI, Constants.Intake.kRotateD);
         rotate_feedforward_controller = new SimpleMotorFeedforward(Constants.Intake.kRotateS, Constants.Intake.kRotateV);

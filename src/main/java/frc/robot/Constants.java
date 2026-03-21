@@ -51,6 +51,8 @@ public final class Constants {
 
   public static class Intake {
     public static final double kIntakeRatio = 9.0;
+    public static final double kRotateRatio = 50.0;
+
     /* Intake PID */
     public static final double kIntakeS = 0.1;
     public static final double kIntakeV = 0.12;
@@ -65,7 +67,6 @@ public final class Constants {
     public static final double kRotateP = 0.01;
     public static final double kRotateI = 0.001;
     public static final double kRotateD = 0.0001;
-    public static final double kRotateRatio = 50.0;
     /* Rotate Feedforward */
     public static final int kMotorkS = 0;
       // kV for in Volts * RPM
@@ -75,9 +76,11 @@ public final class Constants {
   }
 
 public static class HotDog {
-    public static final double kDriveRatio = 7.03;
+    public static final double kHotDogRatio = 7.03;
 
     /* HotDog PID */
+    public static final double kHotDogS = 0.1;
+    public static final double kHotDogV = 0.12;
     public static final double kHotDogP = 0.048;
     public static final double kHotDogI = 0.0;
     public static final double kHotDogD = 0.0;
@@ -91,7 +94,7 @@ public static class HotDog {
   }
 
 public static class Climber {
-    public static final double kDriveRatio = 7.03;
+    public static final double kClimberRatio = 7.03;
 
     /* Climber PID */
     public static final double kRotateP = 0.0;
@@ -106,16 +109,22 @@ public static class Climber {
   }
 
   public static class Flywheel {
-    public static final double kDriveRatio = 7.03;
+    public static final double kFlywheelLeftRatio = 7.03;
+    public static final double kFlywheelRightRatio = 7.03;
 
-    /* Flywheel 1 PID */
-    public static final double kFlywheelMotor1P = 0.0;
-    public static final double kFlywheelMotor1I = 0.0;
-    public static final double kFlywheelMotor1D = 0.0;
-    /* Flywheel 2 PID */
-    public static final double kFlywheelMotor2P = 0.0;
-    public static final double kFlywheelMotor2I = 0.0;
-    public static final double kFlywheelMotor2D = 0.0;
+
+    /* FlywheelLeft PID */
+    public static final double kFlywheelLeftS = 0.1;
+    public static final double kFlywheelLeftV = 0.12;
+    public static final double kFlywheelLeftP = 0.0;
+    public static final double kFlywheelLeftI = 0.0;
+    public static final double kFlywheelLeftD = 0.0;
+    /* Flywheel Right PID */
+    public static final double kFlywheelRightS = 0.1;
+    public static final double kFlywheelRightV = 0.12;
+    public static final double kFlywheelRightP = 0.0;
+    public static final double kFlywheelRightI = 0.0;
+    public static final double kFlywheelRightD = 0.0;
     // kV for in Volts * RPM
     public static final double kMotorkV = 0.002;
     public static final double kFeedForwardMaxVoltage = 12;
