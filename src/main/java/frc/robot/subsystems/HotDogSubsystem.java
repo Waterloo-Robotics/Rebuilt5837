@@ -37,7 +37,7 @@ public class HotDogSubsystem extends SubsystemBase{
     
     public double hotdog_speed = 0;
 
-    public HotDogSubsystem(int hotdog_id, CommandXboxController xbox_controller) {
+    public HotDogSubsystem(int hotdog_id) {
         
         /*intake Things */
         hotdog_config = new Slot0Configs();

@@ -55,7 +55,7 @@ public class FlywheelSubsystem extends SubsystemBase{
     public double flywheelLeft_speed = 0;
     public double flywheelRight_speed = 0;
 
-    public FlywheelSubsystem(int flywheelLeft_id, int flywheelRignt_id, CommandXboxController xbox_controller) {
+    public FlywheelSubsystem(int flywheelLeft_id, int flywheelRignt_id) {
         
         /*FlywheelLeft Things */
         flywheelLeft_config = new Slot0Configs();
@@ -90,7 +90,14 @@ public class FlywheelSubsystem extends SubsystemBase{
     public void Flywheel_on() {
         this.flywheelLeft_speed = 60;
         this.flywheelRight_speed = 60;
+    }
 
+    public void FlywheelLeft_on() {
+        this.flywheelLeft_speed = 60;
+    }
+
+    public void FlywheelRight_on() {
+        this.flywheelRight_speed = 60;
     }
 
     public void Flywheel_off() {

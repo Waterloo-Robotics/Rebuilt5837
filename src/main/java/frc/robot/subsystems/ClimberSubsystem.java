@@ -47,7 +47,7 @@ public class ClimberSubsystem extends SubsystemBase{
     public double Climber_Up = 50;
     public double target_position;
 
-    public ClimberSubsystem(int climber_id, CommandXboxController xbox_controller) {
+    public ClimberSubsystem(int climber_id) {
         
         this.climber_talon = new TalonFX(climber_id);
         this.climber_output_config = new MotorOutputConfigs();
