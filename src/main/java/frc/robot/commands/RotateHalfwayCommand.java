@@ -5,6 +5,7 @@
 package frc.robot.commands;
 
 import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.subsystems.IntakeSubsystem.IntakeStates;
 import edu.wpi.first.wpilibj2.command.Command;
 
 /** An example command that uses an example subsystem. */
@@ -25,14 +26,15 @@ public class RotateHalfwayCommand extends Command {
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+    m_subsystem.setState(IntakeStates.HALFWAY);
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
     m_subsystem.rotate_halfway();
     m_subsystem.intake_off();
-
   }
 
   // Called once the command ends or is interrupted.
@@ -42,6 +44,6 @@ public class RotateHalfwayCommand extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return m_subsystem.target_position != m_subsystem.Rotate_HalfWay;
+    return m_subsystem.getState() != IntakeStates.HALFWAY;
   }
 }

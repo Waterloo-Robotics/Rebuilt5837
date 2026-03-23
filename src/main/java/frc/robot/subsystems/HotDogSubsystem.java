@@ -39,6 +39,7 @@ public class HotDogSubsystem extends SubsystemBase{
 
     public HotDogSubsystem(int hotdog_id) {
         
+        HotDog_talon = new TalonFX(hotdog_id);
         /*intake Things */
         hotdog_config = new Slot0Configs();
         hotdog_config.kS = Constants.HotDog.kHotDogS;
@@ -57,8 +58,11 @@ public class HotDogSubsystem extends SubsystemBase{
     }
 
     public void SpinFoward() {
-        this.hotdog_speed = 60;
+        this.hotdog_speed = 4050;
+        setHotDog(hotdog_speed);
+
     }
+
 
     public void SpinBackward() {
         this.hotdog_speed = -60;
@@ -66,6 +70,14 @@ public class HotDogSubsystem extends SubsystemBase{
 
     public void StopHotDogs() {
         this.hotdog_speed = 0;
+        HotDog_talon.set(0);
+
+    }
+
+     public void setHotDog(double rpm) {
+        double RPS = (rpm / 60);
+        HotDog_talon.setControl(hotdog_voltage.withVelocity(RPS).withFeedForward(0.5));
+        
     }
 
     

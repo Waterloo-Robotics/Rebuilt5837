@@ -11,6 +11,8 @@ import com.ctre.phoenix6.configs.Slot0Configs;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.controls.VelocityVoltage;
 import com.ctre.phoenix6.hardware.TalonFX;
+import com.ctre.phoenix.motorcontrol.SensorCollection;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix6.signals.InvertedValue;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
@@ -24,6 +26,7 @@ public class IntakeSubsystem extends SubsystemBase {
     public enum IntakeStates {
         HOME,
         INTAKE,
+        HALFWAY,
         REST
     }
 
@@ -44,17 +47,25 @@ public class IntakeSubsystem extends SubsystemBase {
     public PIDController intake_controller;
     public PIDController rotate_controller;
 
+    /*Absloute Encoder */
+    WPI_TalonSRX rotate_EncoderTalon;
+    public static SensorCollection rotate_EncoderCollection;
+
+
+
+
     public IntakeStates current_state = IntakeStates.HOME;
     public double Rotate_Home  = 0;
-    public double Rotate_HalfWay = 45;
-    public double Rotate_Down = 80;
+    public double Rotate_HalfWay = 50;
+    public double Rotate_Down = 100;
     public double target_position;
+
+    
 
     
     public double intake_speed = 0;
 
     public IntakeSubsystem(int intake_id, int rotate_id) {
-        
         this.intake_talon = new TalonFX(intake_id);
 
         /*intake Things */
@@ -72,7 +83,8 @@ public class IntakeSubsystem extends SubsystemBase {
 
         /*Rotate Things */
         this.rotate_talon = new TalonFX(rotate_id);
-        this.rotate_output_config = new MotorOutputConfigs();
+        this.rotate_output_config = new MotorOutputConfigs()
+        .withInverted(InvertedValue.Clockwise_Positive);
         this.rotate_open_loop_config = new OpenLoopRampsConfigs()
             .withDutyCycleOpenLoopRampPeriod(0.25)
         ;
@@ -82,13 +94,25 @@ public class IntakeSubsystem extends SubsystemBase {
         ;
         this.rotate_talon.getConfigurator().apply(rotate_config, 0.020);
        
-
         rotate_controller = new PIDController(Constants.Intake.kRotateP, Constants.Intake.kRotateI, Constants.Intake.kRotateD);
         rotate_feedforward_controller = new SimpleMotorFeedforward(Constants.Intake.kRotateS, Constants.Intake.kRotateV);
+        
+        /*Encoder Things */
+        rotate_EncoderTalon = new WPI_TalonSRX(25);
+        rotate_EncoderTalon.setInverted(false);
+        rotate_EncoderCollection = rotate_EncoderTalon.getSensorCollection();
+    }
+
+    public void setState(IntakeStates state) {
+        this.current_state = state;
+    }
+
+    public IntakeStates getState() {
+        return this.current_state;
     }
 
     public void intake_on() {
-        this.intake_speed = 60;
+        this.intake_speed = 600;
         setIntake(intake_speed);
     }
 
@@ -139,11 +163,12 @@ public class IntakeSubsystem extends SubsystemBase {
     }
 
     public double getRotateVelocity() {
-        return this.rotate_talon.getVelocity().getValueAsDouble() * 60;
+        return this.rotate_talon.getVelocity().getValueAsDouble() * 60 / Constants.Intake.kRotateRatio;
     }
     
     public double getRotatePosition() {
-        return this.rotate_talon.getPosition().getValueAsDouble() * 360/* / Constants.Intake.kRotateRatio*/;
+        //return this.rotate_talon.getPosition().getValueAsDouble() * 360/* / Constants.Intake.kRotateRatio*/;
+        return (double) (rotate_EncoderCollection.getPulseWidthPosition() / 4096.0) * 360.0;
     }
 
     public void periodic() {

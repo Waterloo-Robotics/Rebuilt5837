@@ -50,7 +50,7 @@ public final class Constants {
   }
 
   public static class Intake {
-    public static final double kIntakeRatio = 9.0;
+    public static final double kIntakeRatio = 5.0;
     public static final double kRotateRatio = 50.0;
 
     /* Intake PID */
@@ -76,7 +76,7 @@ public final class Constants {
   }
 
 public static class HotDog {
-    public static final double kHotDogRatio = 7.03;
+    public static final double kHotDogRatio = 5.0;
 
     /* HotDog PID */
     public static final double kHotDogS = 0.1;
@@ -94,7 +94,7 @@ public static class HotDog {
   }
 
 public static class Climber {
-    public static final double kClimberRatio = 7.03;
+    public static final double kClimberRatio = 0.0;
 
     /* Climber PID */
     public static final double kRotateP = 0.0;
@@ -109,8 +109,8 @@ public static class Climber {
   }
 
   public static class Flywheel {
-    public static final double kFlywheelLeftRatio = 7.03;
-    public static final double kFlywheelRightRatio = 7.03;
+    public static final double kFlywheelLeftRatio = -1.0;
+    public static final double kFlywheelRightRatio = 1.0;
 
 
     /* FlywheelLeft PID */

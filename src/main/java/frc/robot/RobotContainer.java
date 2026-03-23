@@ -10,10 +10,8 @@ import frc.robot.commands.RotateDownCommand;
 import frc.robot.commands.RotateHalfwayCommand;
 import frc.robot.commands.RotateHomeCommand;
 import frc.robot.commands.RotateStopCommand;
-import frc.robot.commands.FlywheelLeftOnCommand;
 import frc.robot.commands.FlywheelOffCommand;
-import frc.robot.commands.FlywheelRightOnCommand;
-import frc.robot.commands.HotDogOffCommand;
+import frc.robot.commands.FlywheelOnCommand;
 import frc.robot.commands.HotDogOnCommand;
 import frc.robot.commands.IntakeOffCommand;
 import frc.robot.subsystems.ClimberSubsystem;
@@ -52,7 +50,7 @@ public class RobotContainer {
   public final IntakeSubsystem m_intakeSubsystem = new IntakeSubsystem(15,16);
   public final HotDogSubsystem m_HotDogSubsystem = new HotDogSubsystem(17);
   public final FlywheelSubsystem m_FlywheelSubsystem = new FlywheelSubsystem(19,18);
-  public final ClimberSubsystem m_ClimberSubsystem = new ClimberSubsystem(17);
+  public final ClimberSubsystem m_ClimberSubsystem = new ClimberSubsystem(20);
 
 
 
@@ -65,12 +63,9 @@ public class RobotContainer {
 
   /* Configure trigger->command mappings */
   private void configureBindings() {
-    m_driverController.a().onTrue(new HotDogOnCommand(m_HotDogSubsystem));
-    m_driverController.b().onTrue(new HotDogOffCommand(m_HotDogSubsystem));
-    m_driverController.y().onTrue(new FlywheelOffCommand(m_FlywheelSubsystem));
-    m_driverController.x().onTrue(new FlywheelLeftOnCommand(m_FlywheelSubsystem));
-    //m_driverController.x().onTrue(new FlywheelRightOnCommand(m_FlywheelSubsystem));
-
+    // m_driverController.a().onTrue(new FlywheelOnCommand(m_FlywheelSubsystem));
+    // m_driverController.y().onTrue(new FlywheelOffCommand(m_FlywheelSubsystem, m_HotDogSubsystem));
+    // m_driverController.b().onTrue(new HotDogOnCommand(m_HotDogSubsystem));
 
 
   }

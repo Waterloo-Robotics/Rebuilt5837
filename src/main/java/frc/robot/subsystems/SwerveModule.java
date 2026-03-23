@@ -156,4 +156,8 @@ public class SwerveModule {
         return new SwerveModulePosition(drive_talon.getPosition().getValueAsDouble() * kMeterPerMotorRotation, Rotation2d.fromDegrees(this.get_raw_angle()));
     }
 
+    public SwerveModuleState get_module_speed() {
+        return new SwerveModuleState(drive_talon.getVelocity().getValueAsDouble() * kMeterPerMotorRotation, Rotation2d.fromDegrees(this.get_raw_angle()));
+    }
+
 }

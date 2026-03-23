@@ -231,6 +231,10 @@ public class SwerveBaseSubsystem {
     }
 
     public ChassisSpeeds getCurrentSpeeds() {
+        SwerveModuleState[] states = new SwerveModuleState[4];
+        for (int i = 0; i < 4; i++) {
+            states[i] = this.modules[0].get_module_speed();
+        }
         return kinematics.toChassisSpeeds(states);
     }
 
