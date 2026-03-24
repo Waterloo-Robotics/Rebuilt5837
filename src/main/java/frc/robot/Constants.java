@@ -64,9 +64,9 @@ public final class Constants {
     /* Rotate PID */
     public static final double kRotateS = 0.001;
     public static final double kRotateV = 0.0002;
-    public static final double kRotateP = 0.01;//75;
-    public static final double kRotateI = 0;//.001;
-    public static final double kRotateD = 0;//.0001;
+    public static final double kRotateP = 0.035;
+    public static final double kRotateI = 0.0;
+    public static final double kRotateD = 0.0;
     /* Rotate Feedforward */
     public static final int kMotorkS = 0;
       // kV for in Volts * RPM

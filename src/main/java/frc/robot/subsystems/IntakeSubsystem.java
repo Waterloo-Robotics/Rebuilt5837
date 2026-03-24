@@ -1,23 +1,23 @@
 package frc.robot.subsystems;
 
 
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
-import frc.robot.Constants;
-import edu.wpi.first.epilogue.Logged;
+import com.ctre.phoenix.motorcontrol.SensorCollection;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix6.configs.MotorOutputConfigs;
 import com.ctre.phoenix6.configs.OpenLoopRampsConfigs;
 import com.ctre.phoenix6.configs.Slot0Configs;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.controls.VelocityVoltage;
 import com.ctre.phoenix6.hardware.TalonFX;
-import com.ctre.phoenix.motorcontrol.SensorCollection;
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix6.signals.InvertedValue;
+
+import edu.wpi.first.epilogue.Logged;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 
 
 @Logged
@@ -59,9 +59,9 @@ public class IntakeSubsystem extends SubsystemBase {
     public double Rotate_Home  = 10;
     public double Rotate_HalfWay = 50;
     public double Rotate_Down = 112.5;
-    public double target_position;
+    public double target_position = 0;
 
-    
+    double commanded_power = 0;
 
     
     public double intake_speed = 0;
@@ -87,7 +87,7 @@ public class IntakeSubsystem extends SubsystemBase {
         this.rotate_output_config = new MotorOutputConfigs()
         .withInverted(InvertedValue.Clockwise_Positive);
         this.rotate_open_loop_config = new OpenLoopRampsConfigs()
-            .withDutyCycleOpenLoopRampPeriod(0.25)
+            .withDutyCycleOpenLoopRampPeriod(1.2)
         ;
         this.rotate_config = new TalonFXConfiguration()
             .withMotorOutput(rotate_output_config)
@@ -148,15 +148,16 @@ public class IntakeSubsystem extends SubsystemBase {
     public void rotate_intake() {
 
         double pid_term = rotate_controller.calculate(getRotatePosition(), target_position);
-        double feedforward_term = rotate_feedforward_controller.calculate(getRotateVelocity());
+        // double feedforward_term = rotate_feedforward_controller.calculate(getRotateVelocity());
 
-        double auto_power = MathUtil.clamp(pid_term + feedforward_term, -8, 8);
+        double auto_power = MathUtil.clamp(pid_term, -2.5, 2.5);
 
         rotate_talon.setVoltage(auto_power);
+
+        commanded_power = auto_power;
       
         SmartDashboard.putNumber("Rotate Commanded", auto_power);
         SmartDashboard.putNumber("Rotate Actual", getRotateVelocity());
-        SmartDashboard.putNumber("Rotate Pos", getRotatePosition());
     }
 
     public double getIntakeVelocity() {
@@ -173,8 +174,17 @@ public class IntakeSubsystem extends SubsystemBase {
         return (double) (rotate_EncoderCollection.getPulseWidthPosition() / 4096.0) * 360.0;
     }
 
+    @Override
     public void periodic() {
         SmartDashboard.putNumber("Intake RPM", intake_talon.getVelocity().getValueAsDouble() * 60);
+              
+        SmartDashboard.putNumber("Rotate Commanded RPM", commanded_power);
+        SmartDashboard.putNumber("Rotate Actual RPM", getRotateVelocity());
+        SmartDashboard.putNumber("Rotate RPM Error", commanded_power - getRotateVelocity());
+
+        SmartDashboard.putNumber("Rotate Commanded Position", target_position);
+        SmartDashboard.putNumber("Rotate Actual Position", getRotatePosition());
+        SmartDashboard.putNumber("Rotate Position Error", target_position - getRotatePosition());
     }
 
 }

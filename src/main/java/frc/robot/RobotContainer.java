@@ -64,6 +64,7 @@ public class RobotContainer {
   /* Configure trigger->command mappings */
   private void configureBindings() {
     m_driverController.a().onTrue(new RotateHalfwayCommand(m_intakeSubsystem));
+    m_driverController.x().onTrue(new RotateHomeCommand(m_intakeSubsystem));
     m_driverController.y().onTrue(new RotateDownCommand(m_intakeSubsystem));
     m_driverController.b().onTrue(new RotateStopCommand(m_intakeSubsystem));
 
@@ -73,3 +74,4 @@ public class RobotContainer {
     return new PathPlannerAuto("Example Auto");
 }
 }
+  
