@@ -27,6 +27,7 @@ public class IntakeSubsystem extends SubsystemBase {
         HOME,
         INTAKE,
         HALFWAY,
+        DOWN,
         REST
     }
 
@@ -55,9 +56,9 @@ public class IntakeSubsystem extends SubsystemBase {
 
 
     public IntakeStates current_state = IntakeStates.HOME;
-    public double Rotate_Home  = 0;
+    public double Rotate_Home  = 10;
     public double Rotate_HalfWay = 50;
-    public double Rotate_Down = 100;
+    public double Rotate_Down = 112.5;
     public double target_position;
 
     
@@ -168,6 +169,7 @@ public class IntakeSubsystem extends SubsystemBase {
     
     public double getRotatePosition() {
         //return this.rotate_talon.getPosition().getValueAsDouble() * 360/* / Constants.Intake.kRotateRatio*/;
+        System.out.print((double) (rotate_EncoderCollection.getPulseWidthPosition() / 4096.0) * 360.0);
         return (double) (rotate_EncoderCollection.getPulseWidthPosition() / 4096.0) * 360.0;
     }
 

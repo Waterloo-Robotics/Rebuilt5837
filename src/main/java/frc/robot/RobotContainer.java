@@ -63,9 +63,9 @@ public class RobotContainer {
 
   /* Configure trigger->command mappings */
   private void configureBindings() {
-    // m_driverController.a().onTrue(new FlywheelOnCommand(m_FlywheelSubsystem));
-    // m_driverController.y().onTrue(new FlywheelOffCommand(m_FlywheelSubsystem, m_HotDogSubsystem));
-    // m_driverController.b().onTrue(new HotDogOnCommand(m_HotDogSubsystem));
+    m_driverController.a().onTrue(new RotateHalfwayCommand(m_intakeSubsystem));
+    m_driverController.y().onTrue(new RotateDownCommand(m_intakeSubsystem));
+    m_driverController.b().onTrue(new RotateStopCommand(m_intakeSubsystem));
 
 
   }
