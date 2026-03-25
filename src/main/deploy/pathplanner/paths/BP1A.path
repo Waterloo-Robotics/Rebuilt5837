@@ -1,0 +1,121 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 4.042209677419355,
+        "y": 7.443564516129032
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 3.793516129032258,
+        "y": 7.684943548387096
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 2.198951612903226,
+        "y": 7.443564516129032
+      },
+      "prevControl": {
+        "x": 3.2013233893993185,
+        "y": 7.4265751639850315
+      },
+      "nextControl": {
+        "x": 0.9042822580645167,
+        "y": 7.465508064516128
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 1.8405403225806456,
+        "y": 5.183379032258065
+      },
+      "prevControl": {
+        "x": 0.6482741935483878,
+        "y": 5.051717741935484
+      },
+      "nextControl": {
+        "x": 2.477098333256718,
+        "y": 5.2536737819032755
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 2.623,
+        "y": 6.237
+      },
+      "prevControl": {
+        "x": 1.3284366862290444,
+        "y": 6.8879276662105875
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": null
+    }
+  ],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 1.58,
+      "rotationDegrees": -178.32289696812657
+    }
+  ],
+  "constraintZones": [],
+  "pointTowardsZones": [],
+  "eventMarkers": [
+    {
+      "name": "IntakeOn",
+      "waypointRelativePos": 1.1291512915129167,
+      "endWaypointRelativePos": 1.7896678966789612,
+      "command": {
+        "type": "named",
+        "data": {
+          "name": "IntakeOff"
+        }
+      }
+    },
+    {
+      "name": "IntakeOff",
+      "waypointRelativePos": 1.8081180811808073,
+      "endWaypointRelativePos": null,
+      "command": null
+    },
+    {
+      "name": "FlywheelOn",
+      "waypointRelativePos": 2.0516605166051587,
+      "endWaypointRelativePos": null,
+      "command": null
+    },
+    {
+      "name": "HotDogOn",
+      "waypointRelativePos": 3.0,
+      "endWaypointRelativePos": null,
+      "command": null
+    }
+  ],
+  "globalConstraints": {
+    "maxVelocity": 3.0,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 120.96375653207356
+  },
+  "reversed": false,
+  "folder": null,
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": 180.0
+  },
+  "useDefaultConstraints": true
+}

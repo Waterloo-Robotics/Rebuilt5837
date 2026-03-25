@@ -102,8 +102,40 @@ public class FlywheelSubsystem extends SubsystemBase{
     }
 
     public void Flywheel_on() {
-        this.flywheelLeft_speed = 6000;
-        this.flywheelRight_speed = 6000;
+        /*wonrks supper well arround 8 1/4 ft */
+        this.flywheelLeft_speed = 2500;
+        this.flywheelRight_speed = 2500;
+        setFlywheelLeft(flywheelLeft_speed);
+        setFlywheelRight(flywheelLeft_speed);
+    }
+
+    public void Flywheel_RPM_ZONE_1(){
+        this.flywheelLeft_speed = 5000;
+        this.flywheelRight_speed = 5000;
+        setFlywheelLeft(flywheelLeft_speed);
+        setFlywheelRight(flywheelLeft_speed);
+    }
+    public void Flywheel_RPM_ZONE_2(){
+        this.flywheelLeft_speed = 3500;
+        this.flywheelRight_speed = 3500;
+        setFlywheelLeft(flywheelLeft_speed);
+        setFlywheelRight(flywheelLeft_speed);
+    }
+    public void Flywheel_RPM_ZONE_3(){
+        this.flywheelLeft_speed = 2000;
+        this.flywheelRight_speed = 2000;
+        setFlywheelLeft(flywheelLeft_speed);
+        setFlywheelRight(flywheelLeft_speed);
+    }
+    public void Flywheel_RPM_ZONE_4(){
+        this.flywheelLeft_speed = 3000;
+        this.flywheelRight_speed = 3000;
+        setFlywheelLeft(flywheelLeft_speed);
+        setFlywheelRight(flywheelLeft_speed);
+    }
+    public void Flywheel_RPM_ZONE_5(){
+        this.flywheelLeft_speed = 3500;
+        this.flywheelRight_speed = 3500;
         setFlywheelLeft(flywheelLeft_speed);
         setFlywheelRight(flywheelLeft_speed);
     }
@@ -114,6 +146,7 @@ public class FlywheelSubsystem extends SubsystemBase{
         setFlywheelLeft(flywheelLeft_speed);
         setFlywheelRight(flywheelLeft_speed);
     }
+    
 
     // public void FlywheelLeft_on() {
     //     this.flywheelLeft_speed = 10;

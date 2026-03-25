@@ -1,6 +1,8 @@
 package frc.robot.subsystems;
 
 
+import java.util.concurrent.TimeoutException;
+
 import com.ctre.phoenix.motorcontrol.SensorCollection;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix6.configs.MotorOutputConfigs;
@@ -56,9 +58,12 @@ public class IntakeSubsystem extends SubsystemBase {
 
 
     public IntakeStates current_state = IntakeStates.HOME;
-    public double Rotate_Home  = 10;
-    public double Rotate_HalfWay = 50;
-    public double Rotate_Down = 112.5;
+    public double Rotate_Home  = 90;
+    public double Rotate_HalfWay = 175;
+     public double Rotate_Bounce  = 190;
+      public double Rotate_Travel  = 200;
+    public double Rotate_Down = 209;
+    
     public double target_position = 0;
 
     double commanded_power = 0;
@@ -87,12 +92,10 @@ public class IntakeSubsystem extends SubsystemBase {
         this.rotate_output_config = new MotorOutputConfigs()
         .withInverted(InvertedValue.Clockwise_Positive);
         this.rotate_open_loop_config = new OpenLoopRampsConfigs()
-            .withDutyCycleOpenLoopRampPeriod(1.2)
-        ;
+            .withDutyCycleOpenLoopRampPeriod(1.2);
         this.rotate_config = new TalonFXConfiguration()
             .withMotorOutput(rotate_output_config)
-            .withOpenLoopRamps(rotate_open_loop_config)
-        ;
+            .withOpenLoopRamps(rotate_open_loop_config);
         this.rotate_talon.getConfigurator().apply(rotate_config, 0.020);
        
         rotate_controller = new PIDController(Constants.Intake.kRotateP, Constants.Intake.kRotateI, Constants.Intake.kRotateD);
@@ -113,7 +116,7 @@ public class IntakeSubsystem extends SubsystemBase {
     }
 
     public void intake_on() {
-        this.intake_speed = 600;
+        this.intake_speed = 6000;
         setIntake(intake_speed);
     }
 
@@ -141,6 +144,23 @@ public class IntakeSubsystem extends SubsystemBase {
         target_position = Rotate_Down;
         rotate_intake();
     }
+    public void rotate_bounce() {
+        
+        target_position = Rotate_Bounce;
+        rotate_intake();
+        
+        // target_position = Rotate_Travel;
+        // rotate_intake();
+    }
+    public void rotate_travel() {
+        target_position = Rotate_Travel;
+        rotate_intake();
+    }
+    public void rotate_wait() throws InterruptedException {
+        Thread.sleep(10);
+    }
+
+
     public void rotate_stop() {
         rotate_talon.set(0);
     }
