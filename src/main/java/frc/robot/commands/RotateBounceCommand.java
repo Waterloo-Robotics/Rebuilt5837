@@ -5,11 +5,10 @@
 package frc.robot.commands;
 
 import frc.robot.subsystems.IntakeSubsystem;
-import frc.robot.subsystems.IntakeSubsystem.IntakeStates;
 import edu.wpi.first.wpilibj2.command.Command;
 
 /** An example command that uses an example subsystem. */
-public class BounceCommand extends Command {
+public class RotateBounceCommand extends Command {
   @SuppressWarnings("PMD.UnusedPrivateField")
   private final IntakeSubsystem m_subsystem;
 
@@ -18,7 +17,7 @@ public class BounceCommand extends Command {
    *
    * @param subsystem The subsystem used by this command.
    */
-  public BounceCommand(IntakeSubsystem subsystem) {
+  public RotateBounceCommand(IntakeSubsystem subsystem) {
     m_subsystem = subsystem;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(subsystem);
@@ -26,17 +25,13 @@ public class BounceCommand extends Command {
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {
-    m_subsystem.setState(IntakeStates.HALFWAY);
-  }
+  public void initialize() {}
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_subsystem.rotate_bounce();
-    
-    m_subsystem.rotate_travel();
-    m_subsystem.intake_on();
+    m_subsystem.rotate_bounce_postion();
+
   }
 
   // Called once the command ends or is interrupted.
@@ -46,6 +41,6 @@ public class BounceCommand extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return m_subsystem.getState() != IntakeStates.HALFWAY;
+    return m_subsystem.target_position != m_subsystem.Rotate_Home;
   }
 }

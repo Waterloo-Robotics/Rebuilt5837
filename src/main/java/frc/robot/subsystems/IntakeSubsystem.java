@@ -18,6 +18,7 @@ import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
@@ -60,8 +61,8 @@ public class IntakeSubsystem extends SubsystemBase {
     public IntakeStates current_state = IntakeStates.HOME;
     public double Rotate_Home  = 90;
     public double Rotate_HalfWay = 175;
-     public double Rotate_Bounce  = 190;
-      public double Rotate_Travel  = 200;
+    public double Rotate_Bounce  = 180;
+    public double Rotate_Travel  = 200;
     public double Rotate_Down = 209;
     
     public double target_position = 0;
@@ -144,20 +145,17 @@ public class IntakeSubsystem extends SubsystemBase {
         target_position = Rotate_Down;
         rotate_intake();
     }
-    public void rotate_bounce() {
-        
-        target_position = Rotate_Bounce;
-        rotate_intake();
-        
-        // target_position = Rotate_Travel;
-        // rotate_intake();
-    }
     public void rotate_travel() {
         target_position = Rotate_Travel;
         rotate_intake();
     }
-    public void rotate_wait() throws InterruptedException {
-        Thread.sleep(10);
+    
+
+
+    public void rotate_bounce_postion() {
+        
+        target_position = Rotate_Bounce;
+        rotate_intake();
     }
 
 
@@ -175,9 +173,6 @@ public class IntakeSubsystem extends SubsystemBase {
         rotate_talon.setVoltage(auto_power);
 
         commanded_power = auto_power;
-      
-        SmartDashboard.putNumber("Rotate Commanded", auto_power);
-        SmartDashboard.putNumber("Rotate Actual", getRotateVelocity());
     }
 
     public double getIntakeVelocity() {
@@ -196,15 +191,6 @@ public class IntakeSubsystem extends SubsystemBase {
 
     @Override
     public void periodic() {
-        SmartDashboard.putNumber("Intake RPM", intake_talon.getVelocity().getValueAsDouble() * 60);
-              
-        SmartDashboard.putNumber("Rotate Commanded RPM", commanded_power);
-        SmartDashboard.putNumber("Rotate Actual RPM", getRotateVelocity());
-        SmartDashboard.putNumber("Rotate RPM Error", commanded_power - getRotateVelocity());
-
-        SmartDashboard.putNumber("Rotate Commanded Position", target_position);
-        SmartDashboard.putNumber("Rotate Actual Position", getRotatePosition());
-        SmartDashboard.putNumber("Rotate Position Error", target_position - getRotatePosition());
     }
 
 }

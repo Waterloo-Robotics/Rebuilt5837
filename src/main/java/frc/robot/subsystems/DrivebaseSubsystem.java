@@ -11,6 +11,7 @@ import com.pathplanner.lib.config.PIDConstants;
 
 import edu.wpi.first.epilogue.Logged;
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -62,6 +63,7 @@ public class DrivebaseSubsystem extends SubsystemBase {
     @Override
     public void periodic() {
         swerve_modules.update();
+        SmartDashboard.putNumber("Robot Rotation", swerve_modules.gyro.getRotation2d().getDegrees());
     }
 
     @Override

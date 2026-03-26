@@ -73,6 +73,7 @@ public class SwerveBaseSubsystem {
         positions[3] = modules[3].get_module_position();
 
         this.gyro = new AHRS(SPI.Port.kMXP);
+        this.gyro.reset();
 
         odometry = new SwerveDriveOdometry(kinematics, gyro.getRotation2d(), positions);
         speeds = new ChassisSpeeds();

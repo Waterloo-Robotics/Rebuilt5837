@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 2.623,
-        "y": 6.237
+        "x": 2.599,
+        "y": 5.379
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.751602398945153,
-        "y": 6.847526256070229
+        "x": 2.74203909217854,
+        "y": 6.091088733806695
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 0.6752409638554218,
-        "y": 7.335168674698796
+        "x": 3.4945903614457823,
+        "y": 4.00221686746988
       },
       "prevControl": {
-        "x": 1.1485353454080354,
-        "y": 7.048196130368408
+        "x": 2.6709624095993663,
+        "y": 4.1335181016625455
       },
       "nextControl": null,
       "isLocked": false,
@@ -31,14 +31,7 @@
   "rotationTargets": [],
   "constraintZones": [],
   "pointTowardsZones": [],
-  "eventMarkers": [
-    {
-      "name": "FlywheelOff",
-      "waypointRelativePos": 0,
-      "endWaypointRelativePos": null,
-      "command": null
-    }
-  ],
+  "eventMarkers": [],
   "globalConstraints": {
     "maxVelocity": 3.0,
     "maxAcceleration": 3.0,
@@ -49,13 +42,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 180.0
+    "rotation": 178.8766972859246
   },
   "reversed": false,
   "folder": null,
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 140.10626790467384
+    "rotation": 130.63486017929782
   },
   "useDefaultConstraints": true
 }
