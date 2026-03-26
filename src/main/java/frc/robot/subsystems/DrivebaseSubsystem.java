@@ -54,10 +54,16 @@ public class DrivebaseSubsystem extends SubsystemBase {
             },
             this
         );
+
+        // resetGyro();
     }
 
     public Command driverControlledCommand() {
         return Commands.run(swerve_modules::drive_xbox, this);
+    }
+
+    public void resetGyro() {
+        swerve_modules.resetGyro();
     }
 
     @Override

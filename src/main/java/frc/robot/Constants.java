@@ -45,7 +45,7 @@ public final class Constants {
 
   public static class Drivebase {
     public static final double kWheelOffset_m = Units.inchesToMeters(12);
-    public static final double kMaxDriveSpeed_m_s = Units.feetToMeters(14);
+    public static final double kMaxDriveSpeed_m_s = Units.feetToMeters(18);
     public static final double kMaxSpinSpeed_rev_s = 0.2; // Rps
   }
 
@@ -64,7 +64,7 @@ public final class Constants {
     /* Rotate PID */
     public static final double kRotateS = 0.002;
     public static final double kRotateV = 0.0002;
-    public static final double kRotateP = 0.035;
+    public static final double kRotateP = 0.04;
     public static final double kRotateI = 0.0;
     public static final double kRotateD = 0.0;
     /* Rotate Feedforward */

@@ -31,6 +31,7 @@ public class RotateTravelCommand extends Command {
   @Override
   public void execute() {
     m_subsystem.rotate_travel();
+    m_subsystem.intake_on();
 
   }
 
