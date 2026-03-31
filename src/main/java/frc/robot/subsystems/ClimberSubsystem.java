@@ -85,10 +85,6 @@ public class ClimberSubsystem extends SubsystemBase{
         double auto_power = MathUtil.clamp(pid_term + feedforward_term, -8, 8);
 
         climber_talon.setVoltage(auto_power);
-      
-        SmartDashboard.putNumber("Rotate Commanded", auto_power);
-        SmartDashboard.putNumber("Rotate Actual", getClimberVelocity());
-        SmartDashboard.putNumber("Rotate Pos", getClimberPosition());
     }
 
     public double getClimberPosition() {

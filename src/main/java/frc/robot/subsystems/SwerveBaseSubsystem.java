@@ -73,6 +73,7 @@ public class SwerveBaseSubsystem {
         positions[3] = modules[3].get_module_position();
 
         this.gyro = new AHRS(SPI.Port.kMXP);
+        // this.gyro.reset();
 
         odometry = new SwerveDriveOdometry(kinematics, gyro.getRotation2d(), positions);
         speeds = new ChassisSpeeds();
@@ -203,6 +204,10 @@ public class SwerveBaseSubsystem {
         this.publisher.set(this.getPose());
     }
 
+    public void resetGyro() {
+        gyro.reset();
+    }
+
     public void setModuleStates(SwerveModuleState[] states) {
         this.states = states;
         for (int i = 0; i < 4; i++) {
@@ -231,10 +236,11 @@ public class SwerveBaseSubsystem {
     }
 
     public ChassisSpeeds getCurrentSpeeds() {
-        SwerveModuleState[] states = new SwerveModuleState[4];
+        SwerveModuleState[] current_states = new SwerveModuleState[4];
         for (int i = 0; i < 4; i++) {
-            states[i] = this.modules[0].get_module_speed();
+            current_states[i] = this.modules[0].get_module_speed();
         }
+        // return kinematics.toChassisSpeeds(current_states);
         return kinematics.toChassisSpeeds(states);
     }
 

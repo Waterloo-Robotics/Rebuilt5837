@@ -118,12 +118,6 @@ public class SwerveModule {
         double requestedMotorSpeed = (state.speedMetersPerSecond / kMeterPerMotorRotation) * 60;
         double feedfowardVoltage = MathUtil.clamp(drive_feedforward_controller.calculate(requestedMotorSpeed),
                 -Constants.Drive.kFeedForwardMaxVoltage, Constants.Drive.kFeedForwardMaxVoltage);
-                
-        SmartDashboard.putNumber("Meter per Motor rev", kMeterPerMotorRotation);
-        SmartDashboard.putNumber("Requested Wheel Speed mps", state.speedMetersPerSecond);
-        SmartDashboard.putNumber("Requested Wheel Speed rpm", requestedMotorSpeed);
-
-        SmartDashboard.putNumber("Feed Forward Voltage", feedfowardVoltage);
 
         /* Calculate PID Voltage */
         double closedLoopVoltage;
