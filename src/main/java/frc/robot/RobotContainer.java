@@ -108,14 +108,9 @@ public class RobotContainer {
 
     /*Driver 1 controlls */
     m_driverController.leftTrigger().onTrue(new FlywheelOnCommand(m_FlywheelSubsystem));
-    m_driverController.rightTrigger().whileTrue(Commands.repeatingSequence(new RotateTravelCommand(m_intakeSubsystem).andThen(
-      Commands.waitSeconds(1).andThen(
-        new RotateBounceCommand(m_intakeSubsystem).andThen(
-          Commands.waitSeconds(1))))));
 
     m_driverController.rightTrigger().whileTrue(new FireCommand(m_FlywheelSubsystem, m_intakeSubsystem, m_HotDogSubsystem));
     m_driverController.rightTrigger().onFalse(new FlywheelOffCommand(m_FlywheelSubsystem, m_HotDogSubsystem));
-    m_driverController.rightTrigger().onFalse(new IntakeOffCommand(m_intakeSubsystem));
     m_driverController.rightBumper().onTrue(new FlywheelOffCommand(m_FlywheelSubsystem,m_HotDogSubsystem));
     m_driverController.rightStick().whileTrue(new IntakeOnCommand(m_intakeSubsystem));
     m_driverController.rightStick().onFalse(new IntakeOffCommand(m_intakeSubsystem));
@@ -138,14 +133,24 @@ public class RobotContainer {
     farmSim1.button(12).onTrue(new FlywheelZ4Command(m_FlywheelSubsystem));
     farmSim1.button(14).onTrue(new FlywheelZ5Command(m_FlywheelSubsystem));
     farmSim1.button(16).onTrue(new FlywheelOnCommand(m_FlywheelSubsystem));
+    farmSim1.button(9).onTrue(new HotDogOnCommand(m_HotDogSubsystem,m_FlywheelSubsystem));
+    farmSim1.button(6).onTrue(new FlywheelOffCommand(m_FlywheelSubsystem,m_HotDogSubsystem));
+
+
     farmSim2.button(5).onTrue(new ALLOFFCommand(m_FlywheelSubsystem, m_intakeSubsystem, m_HotDogSubsystem));
-    farmSim1.button(16).onTrue(new FlywheelOffCommand(m_FlywheelSubsystem,m_HotDogSubsystem));
     farmSim2.button(1).onTrue(new IntakeOnCommand(m_intakeSubsystem));
     farmSim2.button(2).onTrue(new IntakeOffCommand(m_intakeSubsystem));
-    farmSim2.button(3).onTrue(new HotDogOnCommand(m_HotDogSubsystem,m_FlywheelSubsystem));
     farmSim2.button(3).onTrue(new RotateDownCommand(m_intakeSubsystem));
     farmSim2.button(4).onTrue(new RotateHalfwayCommand(m_intakeSubsystem));
     farmSim2.button(6).onTrue(new RotateHomeCommand(m_intakeSubsystem));
+
+
+    farmSim1.button(4).onTrue(Commands.repeatingSequence(new RotateTravelCommand(m_intakeSubsystem).andThen(
+      Commands.waitSeconds(1).andThen(
+        new RotateBounceCommand(m_intakeSubsystem).andThen(
+          Commands.waitSeconds(1))))));
+    farmSim1.button(4).onFalse(new RotateDownCommand(m_intakeSubsystem));
+
 
 
 
