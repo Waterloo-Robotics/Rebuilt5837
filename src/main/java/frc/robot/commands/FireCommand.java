@@ -41,9 +41,7 @@ public class FireCommand extends Command {
   @Override
   public void execute() {
     F_subsystem.Flywheel_on();
-    I_subsystem.intake_on();
     HD_subsystem.SpinFoward();
-    // I_subsystem.rotate_bounce_postion();
 
   }
 

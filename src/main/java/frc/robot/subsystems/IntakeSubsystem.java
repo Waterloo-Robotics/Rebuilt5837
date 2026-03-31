@@ -61,11 +61,11 @@ public class IntakeSubsystem extends SubsystemBase {
     public IntakeStates current_state = IntakeStates.HOME;
     public double Rotate_Home  = 90;
     public double Rotate_HalfWay = 175;
-    public double Rotate_Bounce  = 180;
+    public double Rotate_Bounce  = 165;
     public double Rotate_Travel  = 200;
     public double Rotate_Down = 209;
     
-    public double target_position = 0;
+    public double target_position = Rotate_Home;
 
     double commanded_power = 0;
 
@@ -133,21 +133,21 @@ public class IntakeSubsystem extends SubsystemBase {
 
     public void rotate_home() {
         target_position = Rotate_Home;
-        rotate_intake();
+     
     }
 
     public void rotate_halfway() {
         target_position = Rotate_HalfWay;
-        rotate_intake();
+   
     }
 
     public void rotate_down() {
         target_position = Rotate_Down;
-        rotate_intake();
+      
     }
     public void rotate_travel() {
         target_position = Rotate_Travel;
-        rotate_intake();
+       
     }
     
 
@@ -155,7 +155,7 @@ public class IntakeSubsystem extends SubsystemBase {
     public void rotate_bounce_postion() {
         
         target_position = Rotate_Bounce;
-        rotate_intake();
+        
     }
 
 
@@ -191,6 +191,8 @@ public class IntakeSubsystem extends SubsystemBase {
 
     @Override
     public void periodic() {
+        rotate_intake();
+        SmartDashboard.putNumber("Intake", target_position);
     }
 
 }

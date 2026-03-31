@@ -45,8 +45,8 @@ public final class Constants {
 
   public static class Drivebase {
     public static final double kWheelOffset_m = Units.inchesToMeters(12);
-    public static final double kMaxDriveSpeed_m_s = Units.feetToMeters(18);
-    public static final double kMaxSpinSpeed_rev_s = 0.2; // Rps
+    public static final double kMaxDriveSpeed_m_s = Units.feetToMeters(10);
+    public static final double kMaxSpinSpeed_rev_s = 1; // Rps
   }
 
   public static class Intake {

@@ -78,7 +78,7 @@ public class SwerveBaseSubsystem {
         odometry = new SwerveDriveOdometry(kinematics, gyro.getRotation2d(), positions);
         speeds = new ChassisSpeeds();
 
-        this.max_drive_speed_m_s = Units.feetToMeters(Constants.Drivebase.kMaxDriveSpeed_m_s);
+        this.max_drive_speed_m_s = /*Units.feetToMeters*/(Constants.Drivebase.kMaxDriveSpeed_m_s);
 
         input_controller = drive_controller;
         lock_counter = 0;
@@ -100,14 +100,14 @@ public class SwerveBaseSubsystem {
 
     public void drive_xbox() {
         /* Get the inputs from the controller */
-        double x = Math.pow(input_controller.getLeftY(), 2) * Math.signum(input_controller.getLeftY());
-        double y = Math.pow(input_controller.getLeftX(), 2) * Math.signum(input_controller.getLeftX());
-        double rotation = Math.pow(input_controller.getRightX(), 2) * Math.signum(input_controller.getRightX());
+        double x = Math.abs(Math.pow(input_controller.getLeftY(), 3)) * Math.signum(input_controller.getLeftY());
+        double y = Math.abs(Math.pow(input_controller.getLeftX(), 3)) * Math.signum(input_controller.getLeftX());
+        double rotation = Math.abs(Math.pow(input_controller.getRightX(), 3)) * Math.signum(input_controller.getRightX());
 
         /* Apply a deadband to prevent stick drift */
-        x = MathUtil.applyDeadband(x, 0.05, 1);
-        y = MathUtil.applyDeadband(y, 0.05, 1);
-        rotation = MathUtil.applyDeadband(rotation, 0.1, 1);
+        x = MathUtil.applyDeadband(x, 0.01, 1);
+        y = MathUtil.applyDeadband(y, 0.01, 1);
+        rotation = MathUtil.applyDeadband(rotation, 0.01, 1);
 
         /* If no inputs are present, lock the drivebase */
         if (Math.abs(x) + Math.abs(y) + Math.abs(rotation) < 0.15) {
@@ -216,7 +216,7 @@ public class SwerveBaseSubsystem {
     }
 
     public void set_max_drive_speed(double max) {
-        this.max_drive_speed_m_s = Math.abs(max) * Units.feetToMeters(Constants.Drivebase.kMaxDriveSpeed_m_s);
+        this.max_drive_speed_m_s = Math.abs(max) * Constants.Drivebase.kMaxDriveSpeed_m_s;
     }
 
     public enum DriveBaseStates {
