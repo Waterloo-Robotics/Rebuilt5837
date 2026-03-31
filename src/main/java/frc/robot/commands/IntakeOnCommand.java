@@ -5,22 +5,27 @@
 package frc.robot.commands;
 
 import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.subsystems.RotateSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 
 /** An example command that uses an example subsystem. */
 public class IntakeOnCommand extends Command {
   @SuppressWarnings("PMD.UnusedPrivateField")
-  private final IntakeSubsystem m_subsystem;
+  private final IntakeSubsystem I_subsystem;
+  private final RotateSubsystem R_subsystem;
+
 
   /**
    * Creates a new ExampleCommand.
    *
    * @param subsystem The subsystem used by this command.
    */
-  public IntakeOnCommand(IntakeSubsystem subsystem) {
-    m_subsystem = subsystem;
+  public IntakeOnCommand(IntakeSubsystem isubsystem,RotateSubsystem rsubsystem) {
+    I_subsystem = isubsystem;
+    R_subsystem = rsubsystem;
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(subsystem);
+    addRequirements(isubsystem);
+    addRequirements(rsubsystem);
   }
 
   // Called when the command is initially scheduled.
@@ -30,8 +35,8 @@ public class IntakeOnCommand extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_subsystem.intake_on();
-    m_subsystem.rotate_down();
+    I_subsystem.intake_on();
+    R_subsystem.rotate_down();
   }
 
   // Called once the command ends or is interrupted.

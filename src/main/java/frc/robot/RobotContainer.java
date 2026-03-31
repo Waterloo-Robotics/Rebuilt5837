@@ -39,6 +39,8 @@ import com.pathplanner.lib.auto.NamedCommands;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.HotDogSubsystem;
 import frc.robot.subsystems.FlywheelSubsystem;
+import frc.robot.subsystems.RotateSubsystem;
+
 
 /**
  * This class is where the bulk of the robot should be declared. Since
@@ -62,7 +64,8 @@ public class RobotContainer {
   
   /* Robot Subsystems */
   public final DrivebaseSubsystem m_drivebaseSubsystem = new DrivebaseSubsystem(m_driverController);
-  public final IntakeSubsystem m_intakeSubsystem = new IntakeSubsystem(15,16);
+  public final IntakeSubsystem m_intakeSubsystem = new IntakeSubsystem(15);
+  public final RotateSubsystem m_rotateSubsystem = new RotateSubsystem(16);
   public final HotDogSubsystem m_HotDogSubsystem = new HotDogSubsystem(17);
   public final FlywheelSubsystem m_FlywheelSubsystem = new FlywheelSubsystem(19,18);
   public final ClimberSubsystem m_ClimberSubsystem = new ClimberSubsystem(20);
@@ -72,7 +75,7 @@ public class RobotContainer {
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
 
-    NamedCommands.registerCommand("IntakeOn", new IntakeOnCommand(m_intakeSubsystem));
+    NamedCommands.registerCommand("IntakeOn", new IntakeOnCommand(m_intakeSubsystem, m_rotateSubsystem));
     NamedCommands.registerCommand("IntakeOff", new IntakeOffCommand(m_intakeSubsystem));
     NamedCommands.registerCommand("FlywheelOFf", new FlywheelOffCommand(m_FlywheelSubsystem, m_HotDogSubsystem));
     NamedCommands.registerCommand("FlywheelOn", new FlywheelOnCommand(m_FlywheelSubsystem));
@@ -82,11 +85,11 @@ public class RobotContainer {
     NamedCommands.registerCommand("FlywheelZ4", new FlywheelZ4Command(m_FlywheelSubsystem));
     NamedCommands.registerCommand("FlywheelZ5", new FlywheelZ5Command(m_FlywheelSubsystem));
     NamedCommands.registerCommand("HotDogOn", new HotDogOnCommand(m_HotDogSubsystem,m_FlywheelSubsystem));
-    NamedCommands.registerCommand("RotateDown", new RotateDownCommand(m_intakeSubsystem));
-    NamedCommands.registerCommand("RotateHalfway", new RotateHalfwayCommand(m_intakeSubsystem));
-    NamedCommands.registerCommand("RotateHome", new RotateHomeCommand(m_intakeSubsystem));
-    NamedCommands.registerCommand("RotateStop", new RotateStopCommand(m_intakeSubsystem));
-    NamedCommands.registerCommand("RotateTravel", new RotateTravelCommand(m_intakeSubsystem));
+    NamedCommands.registerCommand("RotateDown", new RotateDownCommand(m_rotateSubsystem));
+    NamedCommands.registerCommand("RotateHalfway", new RotateHalfwayCommand(m_intakeSubsystem, m_rotateSubsystem));
+    NamedCommands.registerCommand("RotateHome", new RotateHomeCommand(m_intakeSubsystem, m_rotateSubsystem));
+    NamedCommands.registerCommand("RotateStop", new RotateStopCommand( m_rotateSubsystem));
+    NamedCommands.registerCommand("RotateTravel", new RotateTravelCommand(m_intakeSubsystem, m_rotateSubsystem));
     NamedCommands.registerCommand("ALLOFF", new ALLOFFCommand(m_FlywheelSubsystem, m_intakeSubsystem, m_HotDogSubsystem));
     NamedCommands.registerCommand("Fire", new FireCommand(m_FlywheelSubsystem, m_intakeSubsystem, m_HotDogSubsystem));
 
@@ -112,13 +115,13 @@ public class RobotContainer {
     m_driverController.rightTrigger().whileTrue(new FireCommand(m_FlywheelSubsystem, m_intakeSubsystem, m_HotDogSubsystem));
     m_driverController.rightTrigger().onFalse(new FlywheelOffCommand(m_FlywheelSubsystem, m_HotDogSubsystem));
     m_driverController.rightBumper().onTrue(new FlywheelOffCommand(m_FlywheelSubsystem,m_HotDogSubsystem));
-    m_driverController.rightStick().whileTrue(new IntakeOnCommand(m_intakeSubsystem));
+    m_driverController.rightStick().whileTrue(new IntakeOnCommand(m_intakeSubsystem, m_rotateSubsystem));
     m_driverController.rightStick().onFalse(new IntakeOffCommand(m_intakeSubsystem));
     m_driverController.button(8).onTrue(new ResetGyroCommand(m_drivebaseSubsystem));
     
     m_driverController.leftStick().onTrue(new ALLOFFCommand(m_FlywheelSubsystem, m_intakeSubsystem, m_HotDogSubsystem));
     m_driverController.leftBumper().onTrue(new IntakeOffCommand(m_intakeSubsystem));
-    m_driverController.a().onTrue(new RotateTravelCommand(m_intakeSubsystem));
+    m_driverController.a().onTrue(new RotateTravelCommand(m_intakeSubsystem, m_rotateSubsystem));
 
 
     // m_driverController.b().onTrue(new IntakeOffCommand(m_intakeSubsystem));
@@ -138,18 +141,18 @@ public class RobotContainer {
 
 
     farmSim2.button(5).onTrue(new ALLOFFCommand(m_FlywheelSubsystem, m_intakeSubsystem, m_HotDogSubsystem));
-    farmSim2.button(1).onTrue(new IntakeOnCommand(m_intakeSubsystem));
+    farmSim2.button(1).onTrue(new IntakeOnCommand(m_intakeSubsystem, m_rotateSubsystem));
     farmSim2.button(2).onTrue(new IntakeOffCommand(m_intakeSubsystem));
-    farmSim2.button(3).onTrue(new RotateDownCommand(m_intakeSubsystem));
-    farmSim2.button(4).onTrue(new RotateHalfwayCommand(m_intakeSubsystem));
-    farmSim2.button(6).onTrue(new RotateHomeCommand(m_intakeSubsystem));
+    farmSim2.button(3).onTrue(new RotateDownCommand(m_rotateSubsystem));
+    farmSim2.button(4).onTrue(new RotateHalfwayCommand(m_intakeSubsystem, m_rotateSubsystem));
+    farmSim2.button(6).onTrue(new RotateHomeCommand(m_intakeSubsystem, m_rotateSubsystem));
 
 
-    farmSim1.button(4).onTrue(Commands.repeatingSequence(new RotateTravelCommand(m_intakeSubsystem).andThen(
+    farmSim1.button(4).onTrue(Commands.repeatingSequence(new RotateTravelCommand(m_intakeSubsystem, m_rotateSubsystem).andThen(
       Commands.waitSeconds(1).andThen(
-        new RotateBounceCommand(m_intakeSubsystem).andThen(
+        new RotateBounceCommand(m_intakeSubsystem, m_rotateSubsystem).andThen(
           Commands.waitSeconds(1))))));
-    farmSim1.button(4).onFalse(new RotateDownCommand(m_intakeSubsystem));
+    farmSim1.button(4).onFalse(new RotateDownCommand( m_rotateSubsystem));
 
 
 
