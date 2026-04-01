@@ -87,7 +87,7 @@ public class RobotContainer {
     NamedCommands.registerCommand("RotateHome", new RotateHomeCommand(m_intakeSubsystem));
     NamedCommands.registerCommand("RotateStop", new RotateStopCommand(m_intakeSubsystem));
     NamedCommands.registerCommand("RotateTravel", new RotateTravelCommand(m_intakeSubsystem));
-    NamedCommands.registerCommand("ALLOFF", new ALLOFFCommand(m_FlywheelSubsystem, m_intakeSubsystem, m_HotDogSubsystem));
+    NamedCommands.registerCommand("AllOFF", new ALLOFFCommand(m_FlywheelSubsystem, m_intakeSubsystem, m_HotDogSubsystem));
     NamedCommands.registerCommand("Fire", new FireCommand(m_FlywheelSubsystem, m_intakeSubsystem, m_HotDogSubsystem));
 
 

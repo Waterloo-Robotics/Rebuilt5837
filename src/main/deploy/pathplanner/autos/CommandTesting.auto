@@ -5,6 +5,12 @@
     "data": {
       "commands": [
         {
+          "type": "path",
+          "data": {
+            "pathName": "CommandTesting"
+          }
+        },
+        {
           "type": "named",
           "data": {
             "name": "RotateDown"
@@ -50,6 +56,18 @@
           "type": "wait",
           "data": {
             "waitTime": 5.0
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "AllOFF"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "CommandTesting2"
           }
         }
       ]

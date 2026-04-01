@@ -240,8 +240,8 @@ public class SwerveBaseSubsystem {
         for (int i = 0; i < 4; i++) {
             current_states[i] = this.modules[0].get_module_speed();
         }
-        // return kinematics.toChassisSpeeds(current_states);
-        return kinematics.toChassisSpeeds(states);
+        return kinematics.toChassisSpeeds(current_states);
+        // return kinematics.toChassisSpeeds(states);
     }
 
     public void robotDriveRelative(ChassisSpeeds speeds) {
