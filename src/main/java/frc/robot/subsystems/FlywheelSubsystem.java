@@ -4,6 +4,8 @@ package frc.robot.subsystems;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Constants;
+import frc.robot.LimelightProcessingModule;
+import frc.robot.Table2D;
 import edu.wpi.first.epilogue.Logged;
 import com.ctre.phoenix6.configs.MotorOutputConfigs;
 import com.ctre.phoenix6.configs.OpenLoopRampsConfigs;
@@ -15,12 +17,18 @@ import com.ctre.phoenix6.signals.InvertedValue;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
+import edu.wpi.first.math.geometry.Pose3d;
+import edu.wpi.first.units.DistanceUnit;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 
 
 @Logged
 public class FlywheelSubsystem extends SubsystemBase{
+
+    float[] distance = {22, 30, 35, 40,44,52,56,69,81,125,126};
+    private float[] flywheel_speed = {2650, 2900, 3000, 3100, 3150, 3270, 3300, 3250, 3350, 4000,4000};
+    private Table2D flywheel_speed_table = new Table2D(distance, flywheel_speed);
     
     public enum FlywheelStates {
         SHOOT,
@@ -58,6 +66,9 @@ public class FlywheelSubsystem extends SubsystemBase{
     
     public double flywheelLeft_speed = 0;
     public double flywheelRight_speed = 0;
+
+    /*LimeLight Things */
+    public LimelightProcessingModule RightCAM = new LimelightProcessingModule();
 
     public FlywheelSubsystem(int flywheelLeft_id, int flywheelRignt_id) {
 
@@ -185,6 +196,39 @@ public class FlywheelSubsystem extends SubsystemBase{
     }
     public double getFlywheelMotor2Velocity() {
         return this.flywheelRight_talon.getVelocity().getValueAsDouble() * 60;
+    }
+
+    public void flywheel_auto_on(){
+        float rpm = 0;
+        float angle = 1;
+        boolean limelight_available = false;
+
+        Pose3d pose = RightCAM.limelightResult();
+        float limelight_distance = 0;
+        // Pose2D pose = null; not sure why we had this but ill just comment it out
+
+        if (pose != null) {
+            limelight_distance = (float) (1.75*(float) -pose.getX());
+
+            if (limelight_distance < 81 || limelight_distance > 110) {
+                limelight_available = true;
+            }
+
+
+
+            if(limelight_available){
+                rpm =  (flywheel_speed_table.Lookup(limelight_distance));
+            }else{
+                rpm = 2500;
+            }
+
+        }
+        this.flywheelLeft_speed = rpm;
+        this.flywheelRight_speed = rpm;
+        setFlywheelLeft(flywheelLeft_speed);
+        setFlywheelRight(flywheelLeft_speed);
+
+
     }
 
 }
