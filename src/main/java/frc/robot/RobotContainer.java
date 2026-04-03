@@ -107,7 +107,13 @@ public class RobotContainer {
   private void configureBindings() {
 
     /*Driver 1 controlls */
-    m_driverController.leftTrigger().onTrue(new FlywheelOnCommand(m_FlywheelSubsystem));
+    m_driverController.a().onTrue(new RotateHalfwayCommand(m_intakeSubsystem));
+    m_driverController.b().onTrue(new RotateHalfwayCommand(m_intakeSubsystem));
+
+
+
+
+    /*m_driverController.leftTrigger().onTrue(new FlywheelOnCommand(m_FlywheelSubsystem));
 
     m_driverController.rightTrigger().whileTrue(new FireCommand(m_FlywheelSubsystem, m_intakeSubsystem, m_HotDogSubsystem));
     m_driverController.rightTrigger().onFalse(new FlywheelOffCommand(m_FlywheelSubsystem, m_HotDogSubsystem));
@@ -118,7 +124,7 @@ public class RobotContainer {
     
     m_driverController.leftStick().onTrue(new ALLOFFCommand(m_FlywheelSubsystem, m_intakeSubsystem, m_HotDogSubsystem));
     m_driverController.leftBumper().onTrue(new IntakeOffCommand(m_intakeSubsystem));
-    m_driverController.a().onTrue(new RotateTravelCommand(m_intakeSubsystem));
+    m_driverController.a().onTrue(new RotateTravelCommand(m_intakeSubsystem));*/
 
 
     // m_driverController.b().onTrue(new IntakeOffCommand(m_intakeSubsystem));
@@ -127,7 +133,7 @@ public class RobotContainer {
     // m_driverController.y().onTrue(new RotateDownCommand(m_intakeSubsystem));
 
     /*Driver 2 Controlls */
-    farmSim1.button(11).onTrue(new FlywheelZ1Command(m_FlywheelSubsystem));
+    /*farmSim1.button(11).onTrue(new FlywheelZ1Command(m_FlywheelSubsystem));
     farmSim1.button(13).onTrue(new FlywheelZ2Command(m_FlywheelSubsystem));
     farmSim1.button(15).onTrue(new FlywheelZ3Command(m_FlywheelSubsystem));
     farmSim1.button(12).onTrue(new FlywheelZ4Command(m_FlywheelSubsystem));
@@ -149,7 +155,7 @@ public class RobotContainer {
       Commands.waitSeconds(1).andThen(
         new RotateBounceCommand(m_intakeSubsystem).andThen(
           Commands.waitSeconds(1))))));
-    farmSim1.button(4).onFalse(new RotateDownCommand(m_intakeSubsystem));
+    farmSim1.button(4).onFalse(new RotateDownCommand(m_intakeSubsystem));*/
 
 
 

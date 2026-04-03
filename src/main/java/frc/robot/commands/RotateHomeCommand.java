@@ -42,6 +42,7 @@ public class RotateHomeCommand extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return m_subsystem.target_position != m_subsystem.Rotate_Home;
+    //return m_subsystem.target_position != m_subsystem.Rotate_Home;
+    return true;
   }
 }
