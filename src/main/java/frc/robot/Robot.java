@@ -65,6 +65,9 @@ public class Robot extends TimedRobot {
   /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
   @Override
   public void autonomousInit() {
+
+      m_autonomousCommand = m_robotContainer.getAutonomousCommand();
+    /*trying something from 4646 code guy gave a possoble sulution */
     /*SwerveBaseSubsystem.resetPose(PathPlannerAuto.getStartingPose()));
     m_autonomousCommand = m_robotContainer.getAutonomousCommand();*/
 
