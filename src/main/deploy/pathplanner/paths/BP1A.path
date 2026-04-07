@@ -8,8 +8,8 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.651188739224814,
-        "y": 7.4408304919427275
+        "x": 3.566766129032259,
+        "y": 7.46550806451613
       },
       "isLocked": false,
       "linkedName": null
@@ -96,8 +96,8 @@
   "globalConstraints": {
     "maxVelocity": 3.0,
     "maxAcceleration": 3.0,
-    "maxAngularVelocity": 540.0,
-    "maxAngularAcceleration": 720.0,
+    "maxAngularVelocity": 270.0,
+    "maxAngularAcceleration": 360.0,
     "nominalVoltage": 12.0,
     "unlimited": false
   },
@@ -106,10 +106,10 @@
     "rotation": 120.96375653207356
   },
   "reversed": false,
-  "folder": null,
+  "folder": "PreIowa-Paths",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 180.0
+    "rotation": -178.72696997994328
   },
   "useDefaultConstraints": true
 }

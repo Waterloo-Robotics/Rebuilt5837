@@ -3,32 +3,41 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 2.391,
-        "y": 1.773
+        "x": 3.574080645161291,
+        "y": 0.48745967741935603
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.2705796402734952,
-        "y": 1.9920865969504733
+        "x": 2.9596612903225807,
+        "y": 0.4874596774193561
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 0.8063734939759035,
-        "y": 0.7239036144578312
+        "x": 1.140798858773181,
+        "y": 0.6903566333808839
       },
       "prevControl": {
-        "x": 1.1100390849422739,
-        "y": 0.794438534290619
+        "x": 2.669532452821929,
+        "y": 0.6245195578598048
       },
       "nextControl": null,
       "isLocked": false,
       "linkedName": null
     }
   ],
-  "rotationTargets": [],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0.6886993603411389,
+      "rotationDegrees": 180.0
+    },
+    {
+      "waypointRelativePos": 0.995735607675903,
+      "rotationDegrees": 180.0
+    }
+  ],
   "constraintZones": [],
   "pointTowardsZones": [],
   "eventMarkers": [],
@@ -42,13 +51,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -178.72696997994322
+    "rotation": -178.854237161825
   },
   "reversed": false,
-  "folder": "PreIowa-Paths",
+  "folder": "GraniteCity",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 39.37356253641052
+    "rotation": -178.96610927864535
   },
   "useDefaultConstraints": true
 }

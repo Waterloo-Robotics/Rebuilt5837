@@ -21,7 +21,7 @@
       },
       "prevControl": {
         "x": 6.898567760360607,
-        "y": 0.4261182103805532
+        "y": 0.4261182103805531
       },
       "nextControl": {
         "x": 7.931240963855423,
@@ -131,8 +131,8 @@
   "globalConstraints": {
     "maxVelocity": 3.0,
     "maxAcceleration": 3.0,
-    "maxAngularVelocity": 540.0,
-    "maxAngularAcceleration": 720.0,
+    "maxAngularVelocity": 270.0,
+    "maxAngularAcceleration": 360.0,
     "nominalVoltage": 12.0,
     "unlimited": false
   },
@@ -141,7 +141,7 @@
     "rotation": 50.01311375503592
   },
   "reversed": false,
-  "folder": null,
+  "folder": "PreIowa-Paths",
   "idealStartingState": {
     "velocity": 0,
     "rotation": 0.0

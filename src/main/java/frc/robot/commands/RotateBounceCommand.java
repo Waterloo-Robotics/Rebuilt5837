@@ -36,7 +36,7 @@ public class RotateBounceCommand extends Command {
   @Override
   public void execute() {
     R_subsystem.rotate_bounce_postion();
-    I_subsystem.intake_on();
+    I_subsystem.intake_bounce();
 
   }
 

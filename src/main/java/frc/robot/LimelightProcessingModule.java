@@ -10,6 +10,7 @@ import edu.wpi.first.math.util.Units;
 import edu.wpi.first.units.AngleUnit;
 import edu.wpi.first.units.DistanceUnit;
 import edu.wpi.first.units.measure.Distance;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import java.util.List;
 
@@ -26,11 +27,22 @@ public class LimelightProcessingModule {
     *  relative to the april tag.
     * */
     public Pose3d limelightResult() {
-        LimelightResults results = LimelightHelpers.getLatestResults("limelight-right");
+        LimelightResults rigntresults = LimelightHelpers.getLatestResults("limelight-right");
+        SmartDashboard.putNumber("Limelight Results X", rigntresults.getBotPose3d().getX());
 
-        if (results != null && results.valid)
+        if (rigntresults != null && rigntresults.valid)
         {
             Pose3d robot_pose = LimelightHelpers.getBotPose3d_TargetSpace("limeight-right");
+            SmartDashboard.putNumber("Limelight Pose *X", LimelightHelpers.getBotPose3d_TargetSpace("limeight-right").getX());
+            return robot_pose;
+        }
+        LimelightResults leftresults = LimelightHelpers.getLatestResults("limelight-left");
+        SmartDashboard.putNumber("Limelight Results X", leftresults.getBotPose3d().getX());
+
+        if (leftresults != null && leftresults.valid)
+        {
+            Pose3d robot_pose = LimelightHelpers.getBotPose3d_TargetSpace("limeight-left");
+            SmartDashboard.putNumber("Limelight Pose *X", LimelightHelpers.getBotPose3d_TargetSpace("limeight-left").getX());
             return robot_pose;
         }
         return null;

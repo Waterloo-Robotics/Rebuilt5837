@@ -57,7 +57,7 @@ public class RotateSubsystem extends SubsystemBase {
     public RotateStates current_state = RotateStates.HOME;
     public double Rotate_Home  = 90;
     public double Rotate_HalfWay = 175;
-    public double Rotate_Bounce  = 165;
+    public double Rotate_Bounce  = 155;
     public double Rotate_Travel  = 200;
     public double Rotate_Down = 209;
     

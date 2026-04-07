@@ -5,14 +5,12 @@
 package frc.robot.commands;
 
 import frc.robot.subsystems.HotDogSubsystem;
-import frc.robot.subsystems.FlywheelSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 
 /** An example command that uses an example subsystem. */
 public class HotDogOnCommand extends Command {
   @SuppressWarnings("PMD.UnusedPrivateField")
   private final HotDogSubsystem HD_subsystem;
-  private final FlywheelSubsystem m_subsystem;
 
 
   /**
@@ -20,12 +18,10 @@ public class HotDogOnCommand extends Command {
    *
    * @param subsystem The subsystem used by this command.
    */
-  public HotDogOnCommand(HotDogSubsystem subsystem, FlywheelSubsystem f_subsystem) {
+  public HotDogOnCommand(HotDogSubsystem subsystem) {
     HD_subsystem = subsystem;
-    m_subsystem = f_subsystem;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(subsystem);
-    addRequirements(f_subsystem);
 
   }
 
@@ -37,7 +33,6 @@ public class HotDogOnCommand extends Command {
   @Override
   public void execute() {
     HD_subsystem.SpinFoward();
-    m_subsystem.Flywheel_on();
   
   }
   // Called once the command ends or is interrupted.

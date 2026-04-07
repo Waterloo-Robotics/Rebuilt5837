@@ -84,6 +84,11 @@ public class IntakeSubsystem extends SubsystemBase {
         this.intake_speed = 6000;
         setIntake(intake_speed);
     }
+     public void intake_bounce() {
+        this.intake_speed = 3000;
+        setIntake(intake_speed);
+    }
+
 
     public void intake_off() {
         this.intake_speed = 0;

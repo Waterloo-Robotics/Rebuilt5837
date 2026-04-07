@@ -11,6 +11,7 @@ import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.networktables.StructArrayPublisher;
 import edu.wpi.first.networktables.StructPublisher;
 import edu.wpi.first.units.measure.LinearVelocity;
 import edu.wpi.first.units.measure.Velocity;
@@ -52,6 +53,8 @@ public class SwerveBaseSubsystem {
     private double max_drive_speed_m_s;
 
     StructPublisher<Pose2d> publisher;
+    StructArrayPublisher<SwerveModuleState> commanded_speeds_publisher;
+    StructArrayPublisher<SwerveModuleState> actual_speeds_publisher;
 
     public SwerveBaseSubsystem(CommandXboxController drive_controller) {
         /* Create the four swerve modules passing in each corner's CAN ID */
@@ -86,6 +89,11 @@ public class SwerveBaseSubsystem {
 
         this.publisher = NetworkTableInstance.getDefault()
             .getStructTopic("MyPose", Pose2d.struct).publish();
+
+        commanded_speeds_publisher = NetworkTableInstance.getDefault()
+            .getStructArrayTopic("Commanded Swerve States", SwerveModuleState.struct).publish();
+        actual_speeds_publisher = NetworkTableInstance.getDefault()
+            .getStructArrayTopic("Measured Swerve States", SwerveModuleState.struct).publish();
     }
 
     private void lock() {
@@ -100,14 +108,14 @@ public class SwerveBaseSubsystem {
 
     public void drive_xbox() {
         /* Get the inputs from the controller */
-        double x = Math.abs(Math.pow(input_controller.getLeftY(), 3)) * Math.signum(input_controller.getLeftY());
-        double y = Math.abs(Math.pow(input_controller.getLeftX(), 3)) * Math.signum(input_controller.getLeftX());
-        double rotation = Math.abs(Math.pow(input_controller.getRightX(), 3)) * Math.signum(input_controller.getRightX());
+        double x = Math.abs(Math.pow(input_controller.getLeftY(), 5)) * Math.signum(input_controller.getLeftY());
+        double y = Math.abs(Math.pow(input_controller.getLeftX(), 5)) * Math.signum(input_controller.getLeftX());
+        double rotation = Math.abs(Math.pow(input_controller.getRightX(), 6)) * Math.signum(input_controller.getRightX());
 
         /* Apply a deadband to prevent stick drift */
-        x = MathUtil.applyDeadband(x, 0.01, 1);
-        y = MathUtil.applyDeadband(y, 0.01, 1);
-        rotation = MathUtil.applyDeadband(rotation, 0.01, 1);
+        x = MathUtil.applyDeadband(x, 0.005, 1);
+        y = MathUtil.applyDeadband(y, 0.005, 1);
+        rotation = MathUtil.applyDeadband(rotation, 0.005, 1);
 
         /* If no inputs are present, lock the drivebase */
         if (Math.abs(x) + Math.abs(y) + Math.abs(rotation) < 0.15) {
@@ -233,6 +241,7 @@ public class SwerveBaseSubsystem {
 
     public void resetPose(Pose2d position) {
         odometry.resetPose(position);
+
     }
 
     public ChassisSpeeds getCurrentSpeeds() {
@@ -240,12 +249,15 @@ public class SwerveBaseSubsystem {
         for (int i = 0; i < 4; i++) {
             current_states[i] = this.modules[0].get_module_speed();
         }
+        this.actual_speeds_publisher.set(current_states);
         return kinematics.toChassisSpeeds(current_states);
         // return kinematics.toChassisSpeeds(states);
     }
 
     public void robotDriveRelative(ChassisSpeeds speeds) {
-        SwerveModuleState[] states = kinematics.toSwerveModuleStates(speeds);
+        ChassisSpeeds corrected = new ChassisSpeeds(speeds.vxMetersPerSecond, speeds.vyMetersPerSecond, -speeds.omegaRadiansPerSecond);
+        SwerveModuleState[] states = kinematics.toSwerveModuleStates(corrected);
+        this.commanded_speeds_publisher.set(states);
         setModuleStates(states);
     }
 

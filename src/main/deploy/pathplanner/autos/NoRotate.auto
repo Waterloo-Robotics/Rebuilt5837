@@ -5,15 +5,15 @@
     "data": {
       "commands": [
         {
-          "type": "path",
+          "type": "named",
           "data": {
-            "pathName": "BP1A"
+            "name": "RotateDown"
           }
         },
         {
-          "type": "named",
+          "type": "path",
           "data": {
-            "name": "HotDogOn"
+            "pathName": "NoRotate1"
           }
         },
         {
@@ -21,23 +21,11 @@
           "data": {
             "waitTime": 5.0
           }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "AllOFF"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "BP1B"
-          }
         }
       ]
     }
   },
   "resetOdom": true,
-  "folder": "PreIowaAutos",
+  "folder": "GraniteCity",
   "choreoAuto": false
 }

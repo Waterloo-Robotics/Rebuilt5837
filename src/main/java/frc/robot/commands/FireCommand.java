@@ -5,7 +5,6 @@
 package frc.robot.commands;
 
 import frc.robot.subsystems.FlywheelSubsystem;
-import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.HotDogSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 
@@ -13,7 +12,6 @@ import edu.wpi.first.wpilibj2.command.Command;
 public class FireCommand extends Command {
   @SuppressWarnings("PMD.UnusedPrivateField")
   private final FlywheelSubsystem F_subsystem;
-  private final IntakeSubsystem I_subsystem;
   private final HotDogSubsystem HD_subsystem;
 
 
@@ -23,13 +21,11 @@ public class FireCommand extends Command {
    *
    * @param subsystem The subsystem used by this command.
    */
-  public FireCommand(FlywheelSubsystem Fsubsystem, IntakeSubsystem Isubsystem, HotDogSubsystem HDsubsystem ){
+  public FireCommand(FlywheelSubsystem Fsubsystem, HotDogSubsystem HDsubsystem ){
     F_subsystem = Fsubsystem; 
-    I_subsystem = Isubsystem;
     HD_subsystem = HDsubsystem;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(Fsubsystem);
-    addRequirements(Isubsystem);
     addRequirements(HDsubsystem);
   }
 

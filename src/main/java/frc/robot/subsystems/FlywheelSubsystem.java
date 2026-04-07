@@ -17,6 +17,7 @@ import com.ctre.phoenix6.signals.InvertedValue;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
+import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.units.DistanceUnit;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -26,8 +27,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 @Logged
 public class FlywheelSubsystem extends SubsystemBase{
 
-    float[] distance = {22, 30, 35, 40,44,52,56,69,81,125,126};
-    private float[] flywheel_speed = {2650, 2900, 3000, 3100, 3150, 3270, 3300, 3250, 3350, 4000,4000};
+    float[] distance = {20, 100};
+    private float[] flywheel_speed = {2800,4000};
     private Table2D flywheel_speed_table = new Table2D(distance, flywheel_speed);
     
     public enum FlywheelStates {
@@ -69,6 +70,8 @@ public class FlywheelSubsystem extends SubsystemBase{
 
     /*LimeLight Things */
     public LimelightProcessingModule RightCAM = new LimelightProcessingModule();
+    public LimelightProcessingModule LeftCAM = new LimelightProcessingModule();
+
 
     public FlywheelSubsystem(int flywheelLeft_id, int flywheelRignt_id) {
 
@@ -121,32 +124,32 @@ public class FlywheelSubsystem extends SubsystemBase{
     }
 
     public void Flywheel_RPM_ZONE_1(){
-        this.flywheelLeft_speed = 5000;
-        this.flywheelRight_speed = 5000;
+        this.flywheelLeft_speed = 2500;
+        this.flywheelRight_speed = 2500;
         setFlywheelLeft(flywheelLeft_speed);
         setFlywheelRight(flywheelLeft_speed);
     }
     public void Flywheel_RPM_ZONE_2(){
-        this.flywheelLeft_speed = 3500;
-        this.flywheelRight_speed = 3500;
+        this.flywheelLeft_speed = 2750;
+        this.flywheelRight_speed = 2750;
         setFlywheelLeft(flywheelLeft_speed);
         setFlywheelRight(flywheelLeft_speed);
     }
     public void Flywheel_RPM_ZONE_3(){
-        this.flywheelLeft_speed = 2000;
-        this.flywheelRight_speed = 2000;
-        setFlywheelLeft(flywheelLeft_speed);
-        setFlywheelRight(flywheelLeft_speed);
-    }
-    public void Flywheel_RPM_ZONE_4(){
         this.flywheelLeft_speed = 3000;
         this.flywheelRight_speed = 3000;
         setFlywheelLeft(flywheelLeft_speed);
         setFlywheelRight(flywheelLeft_speed);
     }
-    public void Flywheel_RPM_ZONE_5(){
+    public void Flywheel_RPM_ZONE_4(){
         this.flywheelLeft_speed = 3500;
         this.flywheelRight_speed = 3500;
+        setFlywheelLeft(flywheelLeft_speed);
+        setFlywheelRight(flywheelLeft_speed);
+    }
+    public void Flywheel_RPM_ZONE_5(){
+        this.flywheelLeft_speed = 5000;
+        this.flywheelRight_speed = 5000;
         setFlywheelLeft(flywheelLeft_speed);
         setFlywheelRight(flywheelLeft_speed);
     }
@@ -200,15 +203,34 @@ public class FlywheelSubsystem extends SubsystemBase{
 
     public void flywheel_auto_on(){
         float rpm = 0;
-        float angle = 1;
         boolean limelight_available = false;
 
-        Pose3d pose = RightCAM.limelightResult();
+        Pose3d Rigntpose = RightCAM.limelightResult();
         float limelight_distance = 0;
-        // Pose2D pose = null; not sure why we had this but ill just comment it out
+        // Pose2d pose = null; //not sure why we had this but ill just comment it out
 
-        if (pose != null) {
-            limelight_distance = (float) (1.75*(float) -pose.getX());
+        if (Rigntpose != null) {
+            limelight_distance = (float) (1.75*(float) -Rigntpose.getX());
+
+            if (limelight_distance < 81 || limelight_distance > 110) {
+                limelight_available = true;
+            }
+
+            if(limelight_available){
+                rpm =  (flywheel_speed_table.Lookup(limelight_distance));
+            }else{
+                rpm = 2500;
+            }
+
+
+
+
+        }
+         Pose3d Leftpose = LeftCAM.limelightResult();
+        // Pose2d pose = null; //not sure why we had this but ill just comment it out
+
+        if (Leftpose != null) {
+            limelight_distance = (float) (1.75*(float) -Leftpose.getX());
 
             if (limelight_distance < 81 || limelight_distance > 110) {
                 limelight_available = true;
@@ -223,12 +245,72 @@ public class FlywheelSubsystem extends SubsystemBase{
             }
 
         }
+        
         this.flywheelLeft_speed = rpm;
         this.flywheelRight_speed = rpm;
         setFlywheelLeft(flywheelLeft_speed);
         setFlywheelRight(flywheelLeft_speed);
 
+        SmartDashboard.putNumber("Limelight Distance", limelight_distance);
+        SmartDashboard.putBoolean("Limelight Available", limelight_available);
 
+    }
+        
+
+
+
+
+
+ @Override
+    public void periodic() {
+
+        float rpm = 0;
+        boolean limelight_available = false;
+        Pose3d Rigntpose = RightCAM.limelightResult();
+        float limelight_distance = 0;
+        // Pose2d pose = null; //not sure why we had this but ill just comment it out
+
+        if (Rigntpose != null) {
+            limelight_distance = (float) (1.75*(float) -Rigntpose.getX());
+
+            if (limelight_distance < 81 || limelight_distance > 110) {
+                limelight_available = true;
+            }
+
+            if(limelight_available){
+                rpm =  (flywheel_speed_table.Lookup(limelight_distance));
+            }else{
+                rpm = 2500;
+            }
+
+
+
+
+        }
+         Pose3d Leftpose = LeftCAM.limelightResult();
+        // Pose2d pose = null; //not sure why we had this but ill just comment it out
+
+        if (Leftpose != null) {
+            limelight_distance = (float) (1.75*(float) -Leftpose.getX());
+
+            if (limelight_distance < 81 || limelight_distance > 110) {
+                limelight_available = true;
+            }
+
+
+
+            if(limelight_available){
+                rpm =  (flywheel_speed_table.Lookup(limelight_distance));
+            }else{
+                rpm = 2500;
+            }
+
+        }
+        
+        this.flywheelLeft_speed = rpm;
+        this.flywheelRight_speed = rpm;
+        
+        
     }
 
 }
