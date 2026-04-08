@@ -1,0 +1,159 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 6.554,
+        "y": 7.324
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 6.797597798923656,
+        "y": 7.380214876674688
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 7.319289156626505,
+        "y": 7.324240963855422
+      },
+      "prevControl": {
+        "x": 7.171191544007127,
+        "y": 7.525653717017777
+      },
+      "nextControl": {
+        "x": 7.592481927710843,
+        "y": 6.952698795180722
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 7.319289156626505,
+        "y": 4.778084337349397
+      },
+      "prevControl": {
+        "x": 7.7543438197184775,
+        "y": 5.2131390004413705
+      },
+      "nextControl": {
+        "x": 6.761975903614458,
+        "y": 4.22077108433735
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 6.139096385542168,
+        "y": 5.22612048192771
+      },
+      "prevControl": {
+        "x": 6.100549628284439,
+        "y": 4.782832773463835
+      },
+      "nextControl": {
+        "x": 6.182807228915664,
+        "y": 5.728795180722891
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 5.876831325301204,
+        "y": 7.324240963855422
+      },
+      "prevControl": {
+        "x": 6.120614539249069,
+        "y": 7.379646239752663
+      },
+      "nextControl": {
+        "x": 5.512029678491827,
+        "y": 7.241331498671474
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 2.3362530120481932,
+        "y": 7.324240963855422
+      },
+      "prevControl": {
+        "x": 2.5302815120772593,
+        "y": 7.481889120129038
+      },
+      "nextControl": {
+        "x": 2.141002290666565,
+        "y": 7.165599752732849
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 2.8607831325301203,
+        "y": 5.619518072289156
+      },
+      "prevControl": {
+        "x": 2.5001679141596185,
+        "y": 5.72879267091214
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": null
+    }
+  ],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 1.2995850622406382,
+      "rotationDegrees": -85.0
+    },
+    {
+      "waypointRelativePos": 1.8174273858921026,
+      "rotationDegrees": -85.0
+    },
+    {
+      "waypointRelativePos": 2.1759336099585442,
+      "rotationDegrees": 180.0
+    },
+    {
+      "waypointRelativePos": 2.8232365145228338,
+      "rotationDegrees": 90.0
+    },
+    {
+      "waypointRelativePos": 3.6796680497924834,
+      "rotationDegrees": 0.0
+    },
+    {
+      "waypointRelativePos": 4.735269709543531,
+      "rotationDegrees": 0.0
+    }
+  ],
+  "constraintZones": [],
+  "pointTowardsZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 3.0,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 270.0,
+    "maxAngularAcceleration": 360.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 129.20720350496788
+  },
+  "reversed": false,
+  "folder": "GraniteCity",
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": 180.0
+  },
+  "useDefaultConstraints": true
+}
