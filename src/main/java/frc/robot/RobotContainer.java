@@ -127,9 +127,8 @@ public class RobotContainer {
         new RotateBounceCommand(m_intakeSubsystem, m_rotateSubsystem).andThen(
           Commands.waitSeconds(1))))));
     m_driverController.rightTrigger().onFalse(new RotateDownCommand( m_rotateSubsystem));
+    
 
-
-    m_driverController.rightTrigger().onFalse(new FlywheelOffCommand(m_FlywheelSubsystem, m_HotDogSubsystem));
     m_driverController.rightBumper().onTrue(new FlywheelOffCommand(m_FlywheelSubsystem,m_HotDogSubsystem));
     m_driverController.rightStick().whileTrue(new IntakeOnCommand(m_intakeSubsystem, m_rotateSubsystem));
     m_driverController.rightStick().onFalse(new IntakeOffCommand(m_intakeSubsystem));

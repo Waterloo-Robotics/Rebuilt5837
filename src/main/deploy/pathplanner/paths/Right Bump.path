@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.141,
-        "y": 0.69
+        "x": 3.5820120481927713,
+        "y": 2.0461566265060243
       },
       "prevControl": null,
       "nextControl": {
-        "x": 0.8010971073247992,
-        "y": 0.69
+        "x": 3.6585060240963854,
+        "y": 2.4504819277108436
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 2.198951612903226,
-        "y": 2.7988467741935494
+        "x": 2.806144578313253,
+        "y": 2.526975903614458
       },
       "prevControl": {
-        "x": 2.0965529991192335,
-        "y": 2.2429426988237946
+        "x": 3.1266608973047934,
+        "y": 2.258030778562357
       },
       "nextControl": null,
       "isLocked": false,
@@ -30,12 +30,8 @@
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 0.5863539445628946,
-      "rotationDegrees": -135.0
-    },
-    {
-      "waypointRelativePos": 1,
-      "rotationDegrees": 79.563
+      "waypointRelativePos": 1.0,
+      "rotationDegrees": 140.0
     }
   ],
   "constraintZones": [],
@@ -51,13 +47,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -145.2383988421966
+    "rotation": -143.4269690214806
   },
   "reversed": false,
   "folder": "GraniteCity",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 178.50262238252762
+    "rotation": -178.96610927864535
   },
   "useDefaultConstraints": true
 }

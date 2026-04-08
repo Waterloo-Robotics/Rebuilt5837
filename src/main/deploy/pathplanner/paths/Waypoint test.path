@@ -4,24 +4,24 @@
     {
       "anchor": {
         "x": 4.0,
-        "y": 0.5898629032258078
+        "y": 0.5599879518072293
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.756275869208399,
-        "y": 0.4788356191146388
+        "x": 2.4236746987951805,
+        "y": 0.4179277108433747
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 1.4948192771084337,
-        "y": 2.0789397590361443
+        "x": 2.2160481927710847,
+        "y": 2.035228915662651
       },
       "prevControl": {
-        "x": 2.1974053657249257,
-        "y": 1.5690043219120198
+        "x": 1.9210000000000003,
+        "y": 1.1391566265060238
       },
       "nextControl": null,
       "isLocked": false,
@@ -31,7 +31,26 @@
   "rotationTargets": [],
   "constraintZones": [],
   "pointTowardsZones": [],
-  "eventMarkers": [],
+  "eventMarkers": [
+    {
+      "name": "RotateDown",
+      "waypointRelativePos": 0.17171215880893959,
+      "endWaypointRelativePos": null,
+      "command": null
+    },
+    {
+      "name": "IntakeOn",
+      "waypointRelativePos": 0.24714640198511317,
+      "endWaypointRelativePos": 0.7851116625309786,
+      "command": null
+    },
+    {
+      "name": "IntakeOff",
+      "waypointRelativePos": 0.8724565756823737,
+      "endWaypointRelativePos": null,
+      "command": null
+    }
+  ],
   "globalConstraints": {
     "maxVelocity": 3.0,
     "maxAcceleration": 3.0,
@@ -42,13 +61,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -147.36649715321482
+    "rotation": -163.17859010995898
   },
   "reversed": false,
   "folder": "GraniteCity",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 0.0
+    "rotation": 180.0
   },
   "useDefaultConstraints": true
 }
