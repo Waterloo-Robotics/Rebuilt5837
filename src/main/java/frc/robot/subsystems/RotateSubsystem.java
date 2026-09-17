@@ -55,11 +55,12 @@ public class RotateSubsystem extends SubsystemBase {
 
 
     public RotateStates current_state = RotateStates.HOME;
-    public double Rotate_Home  = 90;
-    public double Rotate_HalfWay = 175;
-    public double Rotate_Bounce  = 155;
-    public double Rotate_Travel  = 200;
-    public double Rotate_Down = 209;
+    public double Rotate_Home  =  0 * 360;
+    public double Rotate_HalfWay = 12.415527 * 360;
+    public double Rotate_Bounce  = 9.619141 * 360;
+    public double Rotate_Travel  = 15.59215 * 360;
+    public double Rotate_Down = 16.477539 * 360;
+    public double Rotate_Tolerance = 1.5 * 360;
     
     public double target_position = Rotate_Home;
 
@@ -83,11 +84,13 @@ public class RotateSubsystem extends SubsystemBase {
        
         rotate_controller = new PIDController(Constants.Intake.kRotateP, Constants.Intake.kRotateI, Constants.Intake.kRotateD);
         rotate_feedforward_controller = new SimpleMotorFeedforward(Constants.Intake.kRotateS, Constants.Intake.kRotateV);
+
+        this.rotate_talon.setPosition(0);
         
         /*Encoder Things */
-        rotate_EncoderTalon = new WPI_TalonSRX(25);
-        rotate_EncoderTalon.setInverted(false);
-        rotate_EncoderCollection = rotate_EncoderTalon.getSensorCollection();
+        // rotate_EncoderTalon = new WPI_TalonSRX(25);
+        // rotate_EncoderTalon.setInverted(false);
+        // rotate_EncoderCollection = rotate_EncoderTalon.getSensorCollection();
     }
 
     public void setState(RotateStates state) {
@@ -128,6 +131,7 @@ public class RotateSubsystem extends SubsystemBase {
 
     public void rotate_stop() {
         rotate_talon.set(0);
+        
     }
     
     public void rotate_intake() {
@@ -136,6 +140,10 @@ public class RotateSubsystem extends SubsystemBase {
         // double feedforward_term = rotate_feedforward_controller.calculate(getRotateVelocity());
 
         double auto_power = MathUtil.clamp(pid_term, -2.5, 2.5);
+
+        if (getRotatePosition() >= 17.49 * 360) {
+            auto_power = 0;
+        }
 
         rotate_talon.setVoltage(auto_power);
 
@@ -149,9 +157,9 @@ public class RotateSubsystem extends SubsystemBase {
     }
     
     public double getRotatePosition() {
-        //return this.rotate_talon.getPosition().getValueAsDouble() * 360/* / Constants.Intake.kRotateRatio*/;
-        System.out.print((double) (rotate_EncoderCollection.getPulseWidthPosition() / 4096.0) * 360.0);
-        return (double) (rotate_EncoderCollection.getPulseWidthPosition() / 4096.0) * 360.0;
+        return this.rotate_talon.getPosition().getValueAsDouble() * 360/* / Constants.Intake.kRotateRatio*/;
+        // System.out.print((double) (rotate_EncoderCollection.getPulseWidthPosition() / 4096.0) * 360.0);
+        // return (double) (rotate_EncoderCollection.getPulseWidthPosition() / 4096.0) * 360.0;
     }
 
     @Override

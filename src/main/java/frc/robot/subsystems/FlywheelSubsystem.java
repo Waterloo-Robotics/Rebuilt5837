@@ -161,7 +161,7 @@ public class FlywheelSubsystem extends SubsystemBase{
         setFlywheelRight(flywheelLeft_speed);
     }
     
-
+ 
     // public void FlywheelLeft_on() {
     //     this.flywheelLeft_speed = 10;
     //     setFlywheelLeft(flywheelLeft_speed);

@@ -57,7 +57,7 @@
       },
       "nextControl": {
         "x": 5.712993697639001,
-        "y": 0.6505926893005852
+        "y": 0.6505926893005851
       },
       "isLocked": true,
       "linkedName": null
@@ -99,7 +99,7 @@
     },
     {
       "waypointRelativePos": 1.0323651452281897,
-      "rotationDegrees": 101.78154989671681
+      "rotationDegrees": 101.78154989671683
     },
     {
       "waypointRelativePos": 1.523651452282164,
@@ -134,7 +134,7 @@
     "rotation": -124.85445556610365
   },
   "reversed": false,
-  "folder": "GraniteCity",
+  "folder": "COTC",
   "idealStartingState": {
     "velocity": 0,
     "rotation": 54.43340940870195

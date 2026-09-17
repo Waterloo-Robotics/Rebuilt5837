@@ -113,9 +113,9 @@ public class SwerveBaseSubsystem {
         double rotation = Math.abs(Math.pow(input_controller.getRightX(), 6)) * Math.signum(input_controller.getRightX());
 
         /* Apply a deadband to prevent stick drift */
-        x = MathUtil.applyDeadband(x, 0.005, 1);
-        y = MathUtil.applyDeadband(y, 0.005, 1);
-        rotation = MathUtil.applyDeadband(rotation, 0.005, 1);
+        x = MathUtil.applyDeadband(x, 0.004, 1);
+        y = MathUtil.applyDeadband(y, 0.004, 1);
+        rotation = MathUtil.applyDeadband(rotation, 0.003, 1);
 
         /* If no inputs are present, lock the drivebase */
         if (Math.abs(x) + Math.abs(y) + Math.abs(rotation) < 0.15) {

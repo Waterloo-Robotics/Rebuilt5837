@@ -5,34 +5,27 @@
     "data": {
       "commands": [
         {
-          "type": "path",
+          "type": "wait",
           "data": {
-            "pathName": "RightTrench1"
+            "waitTime": 0.0
           }
         },
         {
-          "type": "race",
+          "type": "named",
           "data": {
-            "commands": [
-              {
-                "type": "named",
-                "data": {
-                  "name": "IntakeOn"
-                }
-              },
-              {
-                "type": "wait",
-                "data": {
-                  "waitTime": 0.5
-                }
-              }
-            ]
+            "name": "RotateDown"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "Right Trench 2"
+            "pathName": "Right Bump"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 2.0
           }
         },
         {
@@ -46,15 +39,9 @@
                 }
               },
               {
-                "type": "named",
-                "data": {
-                  "name": "IntakeOff"
-                }
-              },
-              {
                 "type": "wait",
                 "data": {
-                  "waitTime": 1.5
+                  "waitTime": 2.0
                 }
               }
             ]
@@ -73,7 +60,7 @@
               {
                 "type": "wait",
                 "data": {
-                  "waitTime": 5.0
+                  "waitTime": 4.0
                 }
               }
             ]
@@ -92,7 +79,45 @@
               {
                 "type": "wait",
                 "data": {
-                  "waitTime": 2.0
+                  "waitTime": 1.0
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "race",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "RotateTravel"
+                }
+              },
+              {
+                "type": "wait",
+                "data": {
+                  "waitTime": 1.0
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "race",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "RotateBounce"
+                }
+              },
+              {
+                "type": "wait",
+                "data": {
+                  "waitTime": 1.0
                 }
               }
             ]
@@ -101,13 +126,13 @@
         {
           "type": "named",
           "data": {
-            "name": "ALLOFF"
+            "name": "AllOFF"
           }
         }
       ]
     }
   },
   "resetOdom": true,
-  "folder": "GraniteCity",
+  "folder": "COTC",
   "choreoAuto": false
 }
